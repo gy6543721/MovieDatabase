@@ -1,8 +1,24 @@
 package levilin.moviedatabase.ui.theme
 
+import androidx.compose.material.Colors
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val LightGray = Color(0xFFFAFAFA)
+val LightMediumGray = Color(0xFFD1CFCF)
+val MediumGray = Color(0xFFACA9A9)
+val MediumDarkGray = Color(0xFF6F6C6C)
+val DarkGray = Color(0xFF3D3C3C)
+
+val LightOrange = Color(0xFFF1AC47)
+val Orange = Color(0xFFFF9800)
+val DarkOrange = Color(0xFF533201)
+
+
+val Colors.screenBackgroundColor: Color
+    @Composable
+    get() = if (isLight) LightGray else DarkGray
+
+val Colors.screenTextColor: Color
+    @Composable
+    get() = if (isLight) DarkGray else LightGray
