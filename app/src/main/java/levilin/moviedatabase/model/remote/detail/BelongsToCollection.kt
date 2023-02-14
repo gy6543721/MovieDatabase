@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class BelongsToCollection(
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String = "",
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
     @SerializedName("name")
-    val name: String,
+    val name: String = "",
     @SerializedName("poster_path")
-    val posterPath: String
+    val posterPath: String = ""
 )

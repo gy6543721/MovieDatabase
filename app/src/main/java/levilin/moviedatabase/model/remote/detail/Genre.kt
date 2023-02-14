@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Genre(
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
     @SerializedName("name")
-    val name: String
+    val name: String = ""
 )

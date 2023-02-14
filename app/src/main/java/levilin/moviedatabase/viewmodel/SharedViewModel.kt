@@ -24,7 +24,7 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, application: Application): AndroidViewModel(application) {
     // API response
     private var moviesListResponse: MutableLiveData<NetworkResult<Movies>> = MutableLiveData()
-    var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
+    private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
         private set
@@ -36,6 +36,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     var moviesList = mutableStateOf<List<MovieResult>>(listOf())
     var favoriteList = mutableStateOf<ArrayList<Int>>(arrayListOf())
+    var movieDetail = mutableStateOf(MovieDetail())
 
     init {
         loadMoviesList()
@@ -167,6 +168,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
                 Log.d("TAG", "MovieDetail Response Body ID: ${movieDetailResponse.value!!.data!!.id}")
                 Log.d("TAG", "MovieDetail Response Body: ${movieDetailResponse.value!!.data!!}")
+
+                movieDetail.value = movieDetailResponse.value!!.data!!
 
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)

@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import levilin.moviedatabase.ui.screen.MovieDetailScreen
 import levilin.moviedatabase.ui.screen.MovieListScreen
 import levilin.moviedatabase.ui.theme.MovieDatabaseTheme
-import levilin.moviedatabase.viewmodel.DetailViewModel
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @ExperimentalMaterialApi

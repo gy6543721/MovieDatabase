@@ -13,6 +13,6 @@ interface MoviesAPI {
     suspend fun getMovies(@QueryMap queries: Map<String, String>): Response<Movies>
 
     // Get Movie Detail
-    @GET("/movie/{id}")
+    @GET("movie/{id}")
     suspend fun getMovieDetail(@Path("id") id: String ,@QueryMap queries: Map<String, String>): Response<MovieDetail>
 }

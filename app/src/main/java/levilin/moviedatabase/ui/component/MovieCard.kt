@@ -41,6 +41,7 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
             .aspectRatio(1f)
             .background(MaterialTheme.colors.screenBackgroundColor)
             .clickable {
+                viewModel.loadMovieDetail(id = "${entry.id}")
                 navController.navigate(
                     "movie_detail_screen/${entry.id}"
                 )
