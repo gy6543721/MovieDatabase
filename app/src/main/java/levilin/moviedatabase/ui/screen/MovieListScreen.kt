@@ -32,6 +32,7 @@ import levilin.moviedatabase.model.remote.list.MovieResult
 import levilin.moviedatabase.ui.component.MovieCard
 import levilin.moviedatabase.ui.theme.buttonBackgroundColor
 import levilin.moviedatabase.ui.theme.buttonIconColor
+import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
@@ -92,7 +93,8 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                         "$currentPage / $totalPage"
                     } else {
                         "- / -"
-                    }
+                    },
+                    color = MaterialTheme.colors.screenTextColor
                 )
 
                 Button(

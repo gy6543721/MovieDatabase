@@ -108,7 +108,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 currentPage.value = moviesListResponse.value!!.data!!.page
                 totalPage.value = moviesListResponse.value!!.data!!.totalPages
                 Log.d("TAG", "MovieList Response Body Page: ${moviesListResponse.value!!.data!!.page}")
-
                 Log.d("TAG", "MovieList Response Body: ${moviesListResponse.value!!.data!!.movieResults}")
                 moviesList.value = moviesListResponse.value!!.data!!.movieResults
 
