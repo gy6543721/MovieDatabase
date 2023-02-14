@@ -5,12 +5,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import levilin.moviedatabase.data.remote.RemoteRepository
+import levilin.moviedatabase.model.remote.MovieResult
 import levilin.moviedatabase.model.remote.Movies
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
@@ -20,16 +22,24 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, application: Application): AndroidViewModel(application) {
     // API response
-    var movieResultResponse: MutableLiveData<NetworkResult<Movies>> = MutableLiveData()
-    var responseText: String = "Test"
+    private var movieResultResponse: MutableLiveData<NetworkResult<Movies>> = MutableLiveData()
+
+    var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
+
+    var currentPage = mutableStateOf(value = 1)
+    var totalPage = mutableStateOf(value = Int.MAX_VALUE)
+
+    var moviesList = mutableStateOf<List<MovieResult>>(listOf())
+    var loadingError = mutableStateOf("")
+    var isLoading = mutableStateOf(true)
 
     init {
-        getMoviesInfo(query = "a")
+        loadMovies()
+    }
 
-//        // initialize arranged list to local database
-//        if (_allLocalItems.value.isEmpty()) {
-//            insertCurrencyItemDatabase()
-//        }
+    fun loadMovies() {
+        isLoading.value = true
+        getMoviesInfo(query = searchQuery.value)
     }
 
     private fun checkInternetConnection(): Boolean {
@@ -46,7 +56,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     private fun getMoviesInfo(query: String) {
         viewModelScope.launch {
-            getMoviesList(queries = provideSearchQueries(query = query))
+            getMoviesList(queries = provideSearchQueries(query = query, page = currentPage.value))
         }
     }
 
@@ -62,9 +72,14 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
                 Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieResultResponse.value = handleMoviesListResponse(response = response)
+                isLoading.value = false
 
-                responseText = movieResultResponse.value!!.data!!.movieResults.toString()
+                currentPage.value = movieResultResponse.value!!.data!!.page
+                totalPage.value = movieResultResponse.value!!.data!!.totalPages
+                Log.d("TAG", "Response Body Page: ${movieResultResponse.value!!.data!!.page}")
+
                 Log.d("TAG", "Response Body: ${movieResultResponse.value!!.data!!.movieResults}")
+                moviesList.value = movieResultResponse.value!!.data!!.movieResults
 
             } catch (e: Exception) {
                 movieResultResponse.value = NetworkResult.Error(message = e.localizedMessage)
@@ -80,8 +95,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 NetworkResult.Error(message = "Time Out")
             }
             response.isSuccessful -> {
-                val currencyExchangeRayeResponse = response.body()
-                NetworkResult.Success(data = currencyExchangeRayeResponse!!)
+                val moviesListResponse = response.body()
+                NetworkResult.Success(data = moviesListResponse!!)
             }
             else -> {
                 NetworkResult.Error(message = response.message().toString())
@@ -89,16 +104,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    private fun provideSearchQueries(query: String): Map<String, String> {
+    private fun provideSearchQueries(query: String, page: Int): Map<String, String> {
         val queries = HashMap<String, String>()
         queries.apply {
             this["api_key"] = ConstantValue.API_KEY_V3
             this["query"] = query
+            this["page"] = page.toString()
         }
         return queries
-    }
-
-    fun searchMovie(query: String) {
-
     }
 }

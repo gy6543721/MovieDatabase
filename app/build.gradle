@@ -65,8 +65,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha07"
-
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -76,7 +74,7 @@ dependencies {
 
     // Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.44.2"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.1.0-alpha01'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     kapt "com.google.dagger:hilt-android-compiler:2.44.2"
 
     // Room components
@@ -87,7 +85,7 @@ dependencies {
 
     // Compose Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -104,6 +102,9 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil:2.2.2"
     implementation "io.coil-kt:coil-compose:2.2.2"
+
+    // Palette
+    implementation "androidx.palette:palette:1.0.0"
 
     // Mockito
     testImplementation "org.mockito:mockito-core:4.0.0"

@@ -22,3 +22,11 @@ val Colors.screenBackgroundColor: Color
 val Colors.screenTextColor: Color
     @Composable
     get() = if (isLight) DarkGray else LightGray
+
+val Colors.buttonBackgroundColor: Color
+    @Composable
+    get() = if (isLight) LightGray else DarkGray
+
+val Colors.buttonIconColor: Color
+    @Composable
+    get() = if (isLight) DarkGray else LightGray
