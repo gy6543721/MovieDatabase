@@ -9,7 +9,7 @@ The app will mainly use themoviedb.org's API and will put the media front and ce
 ## Steps to implement
 
 1) Make an API key following the steps here: https://developers.themoviedb.org/3/getting-started/introduction  
-2) Film search (using this API endpoint **GET** https://api.themoviedb.org/3/search/movie?api_key={apikey}&query=<search_query>), display the films in whatever UI you want.  
+2) Film search (using this API endpoint **GET** https://api.themoviedb.org/3/search/movie?api_key={apikey}&query={search_query}), display the films in whatever UI you want.  
 3) The user should be able to see details of the film (endpoint **GET** https://api.themoviedb.org/3/movie/{movie_id}?api_key={apikey})  
 4) The user should be able to favorite and unfavorite a movie (use whatever local storage that you think make sense)  
 5) The user should be able to see a list of favorite movies (and from there go to the detail movie screen)  
