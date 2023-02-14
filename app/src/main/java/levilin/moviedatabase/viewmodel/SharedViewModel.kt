@@ -25,13 +25,15 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private var movieResultResponse: MutableLiveData<NetworkResult<Movies>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
+        private set
+    var loadingError = mutableStateOf("")
+    var isLoading = mutableStateOf(true)
 
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 
     var moviesList = mutableStateOf<List<MovieResult>>(listOf())
-    var loadingError = mutableStateOf("")
-    var isLoading = mutableStateOf(true)
+    var favoriteList = mutableStateOf<ArrayList<Int>>(arrayListOf())
 
     init {
         loadMovies()
@@ -40,6 +42,26 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun loadMovies() {
         isLoading.value = true
         getMoviesInfo(query = searchQuery.value)
+    }
+
+    fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
+        if (!isFavorite && checkFavorite(entry = entry)) {
+            favoriteList.value.remove(entry.id)
+            Log.d("TAG","favorite list: ${favoriteList.value}")
+            Log.d("TAG","remove favorite: ${entry.id}")
+        } else {
+            if (isFavorite && !checkFavorite(entry = entry)) {
+                favoriteList.value.add(entry.id)
+                Log.d("TAG","favorite list: ${favoriteList.value}")
+                Log.d("TAG","add favorite: ${entry.id}")
+            } else {
+                return
+            }
+        }
+    }
+
+    fun checkFavorite(entry: MovieResult): Boolean {
+        return favoriteList.value.contains(entry.id)
     }
 
     private fun checkInternetConnection(): Boolean {

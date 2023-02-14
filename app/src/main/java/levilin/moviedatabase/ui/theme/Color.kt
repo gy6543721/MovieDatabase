@@ -30,3 +30,7 @@ val Colors.buttonBackgroundColor: Color
 val Colors.buttonIconColor: Color
     @Composable
     get() = if (isLight) DarkGray else LightGray
+
+val Colors.favouriteButtonColor: Color
+    @Composable
+    get() = if (isLight) LightMediumGray else MediumDarkGray

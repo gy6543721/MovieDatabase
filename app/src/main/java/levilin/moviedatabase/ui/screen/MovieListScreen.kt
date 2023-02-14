@@ -173,7 +173,7 @@ fun MoviesList(navController: NavController, viewModel: SharedViewModel = hiltVi
                     viewModel.loadMovies()
                 }
             }
-            ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController)
+            ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController, viewModel = viewModel)
         }
     }
     Box(contentAlignment = Center, modifier = Modifier.fillMaxSize()) {
@@ -189,11 +189,12 @@ fun MoviesList(navController: NavController, viewModel: SharedViewModel = hiltVi
 }
 
 @Composable
-fun ListRow(rowIndex: Int, entries: List<MovieResult>, navController: NavController) {
+fun ListRow(rowIndex: Int, entries: List<MovieResult>, navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     Column {
         Row {
             MovieCard(
                 entry = entries[rowIndex * 2],
+                viewModel = viewModel,
                 navController = navController,
                 modifier = Modifier.weight(1f)
             )
@@ -201,6 +202,7 @@ fun ListRow(rowIndex: Int, entries: List<MovieResult>, navController: NavControl
             if(entries.size >= rowIndex * 2 + 2) {
                 MovieCard(
                     entry = entries[rowIndex * 2 + 1],
+                    viewModel = viewModel,
                     navController = navController,
                     modifier = Modifier.weight(1f)
                 )
