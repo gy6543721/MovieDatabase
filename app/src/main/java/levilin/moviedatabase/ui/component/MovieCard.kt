@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import levilin.moviedatabase.model.remote.MovieResult
+import levilin.moviedatabase.model.remote.list.MovieResult
 import levilin.moviedatabase.ui.theme.favouriteButtonColor
 import levilin.moviedatabase.ui.theme.screenBackgroundColor
 import levilin.moviedatabase.utility.ConstantValue

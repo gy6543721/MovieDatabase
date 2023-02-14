@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import levilin.moviedatabase.R
-import levilin.moviedatabase.model.remote.MovieResult
+import levilin.moviedatabase.model.remote.list.MovieResult
 import levilin.moviedatabase.ui.component.MovieCard
 import levilin.moviedatabase.ui.theme.buttonBackgroundColor
 import levilin.moviedatabase.ui.theme.buttonIconColor
@@ -59,7 +59,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
             ) { input ->
                 searchQuery = input
                 currentPage = 1
-                viewModel.loadMovies()
+                viewModel.loadMoviesList()
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -73,7 +73,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     onClick = {
                         if (currentPage > 1) {
                             currentPage -= 1
-                            viewModel.loadMovies()
+                            viewModel.loadMoviesList()
                         }
                     },
                     shape = CircleShape,
@@ -99,7 +99,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     onClick = {
                         if (currentPage < totalPage) {
                             currentPage += 1
-                            viewModel.loadMovies()
+                            viewModel.loadMoviesList()
                         }
                     },
                     shape = CircleShape,
@@ -170,7 +170,7 @@ fun MoviesList(navController: NavController, viewModel: SharedViewModel = hiltVi
         items(itemCount) { rowIndex ->
             if(rowIndex >= itemCount - 1) {
                 LaunchedEffect(key1 = true) {
-                    viewModel.loadMovies()
+                    viewModel.loadMoviesList()
                 }
             }
             ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController, viewModel = viewModel)
@@ -182,7 +182,7 @@ fun MoviesList(navController: NavController, viewModel: SharedViewModel = hiltVi
         }
         if(loadingError.isNotEmpty()) {
             RetrySection(error = loadingError) {
-                viewModel.loadMovies()
+                viewModel.loadMoviesList()
             }
         }
     }
