@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">MovieDatabase</string>
     <string name="search_bar_hint">Search...</string>
-    <string name="search_bar_trail_icon">Clear</string>
-    trail_icon_text
 </resources>

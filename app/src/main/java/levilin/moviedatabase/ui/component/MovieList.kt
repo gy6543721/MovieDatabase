@@ -19,7 +19,7 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     val moviesList by remember { viewModel.movieList }
     val loadingError by remember { viewModel.loadingError }
-    val isLoading by remember { viewModel.isLoading }
+    val isLoading by remember { viewModel.isRemoteLoading }
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount = if(moviesList.size % 2 == 0) {

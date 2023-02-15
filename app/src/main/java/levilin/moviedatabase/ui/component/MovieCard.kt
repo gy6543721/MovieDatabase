@@ -90,6 +90,7 @@ fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel:
         onCheckedChange = {
             isFavorite = !isFavorite
             viewModel.favoriteAction(isFavorite = isFavorite, entry = entry)
+            viewModel.loadFavoriteList()
         }
     ) {
         Icon(
