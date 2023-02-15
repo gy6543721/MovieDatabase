@@ -35,7 +35,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 
     var movieList = mutableStateOf<List<MovieResult>>(listOf())
-    var favoriteList = mutableStateOf<ArrayList<Int>>(arrayListOf())
+    var favoriteList = mutableStateOf<ArrayList<MovieResult>>(arrayListOf())
+    var favoriteListElement = mutableStateOf<ArrayList<Int>>(arrayListOf())
     var movieDetail = mutableStateOf(MovieDetail())
 
     init {
@@ -54,13 +55,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
-            favoriteList.value.remove(entry.id)
-            Log.d("TAG","favorite list: ${favoriteList.value}")
+            favoriteList.value.remove(element = entry)
+            favoriteListElement.value.remove(element = entry.id)
             Log.d("TAG","remove favorite: ${entry.id}")
         } else {
             if (isFavorite && !checkFavorite(input = entry)) {
-                favoriteList.value.add(entry.id)
-                Log.d("TAG","favorite list: ${favoriteList.value}")
+                favoriteList.value.add(element = entry)
+                favoriteListElement.value.add(element = entry.id)
                 Log.d("TAG","add favorite: ${entry.id}")
             } else {
                 return
@@ -69,7 +70,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     private fun checkFavorite(input: MovieResult): Boolean {
-        return favoriteList.value.contains(input.id)
+        return favoriteListElement.value.contains(input.id)
     }
 
     private fun checkInternetConnection(): Boolean {
@@ -107,8 +108,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
                 currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
-                Log.d("TAG", "MovieList Response Body Page: ${movieInfoListResponse.value!!.data!!.page}")
-                Log.d("TAG", "MovieList Response Body: ${movieInfoListResponse.value!!.data!!.movieResults}")
+//                Log.d("TAG", "MovieList Response Body Page: ${movieInfoListResponse.value!!.data!!.page}")
+//                Log.d("TAG", "MovieList Response Body: ${movieInfoListResponse.value!!.data!!.movieResults}")
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
 
             } catch (e: Exception) {
@@ -164,10 +165,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 isLoading.value = false
-
-                Log.d("TAG", "MovieDetail Response Body ID: ${movieDetailResponse.value!!.data!!.id}")
-                Log.d("TAG", "MovieDetail Response Body: ${movieDetailResponse.value!!.data!!}")
-
+//                Log.d("TAG", "MovieDetail Response Body ID: ${movieDetailResponse.value!!.data!!.id}")
+//                Log.d("TAG", "MovieDetail Response Body: ${movieDetailResponse.value!!.data!!}")
                 movieDetail.value = movieDetailResponse.value!!.data!!
 
             } catch (e: Exception) {

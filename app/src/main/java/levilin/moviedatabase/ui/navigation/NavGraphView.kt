@@ -22,7 +22,7 @@ fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewMo
             MovieListScreen(navController = navController, viewModel = sharedViewModel)
         }
         composable("favorite_list_screen") {
-            FavoriteListScreen()
+            FavoriteListScreen(navController = navController, viewModel = sharedViewModel)
         }
         composable(
             "movie_detail_screen/{id}",
