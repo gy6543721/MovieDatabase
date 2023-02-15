@@ -1,5 +1,8 @@
 # MovieDatabase
- Coding Challenge
+[Demo Video](https://youtu.be/tsLmsMGoHyM)  
+[Github Repository (Maybe Private)](https://github.com/gy6543721/MovieDatabase)  
+
+Coding Challenge
 
 ## Intro
 
@@ -30,4 +33,16 @@ We know you are under a time limit and we will of course take this into account.
 - We prefer that you use git even though you shouldn't make your code public, that way we can track progress and the way you work
 - Push to a private repository we invited
 - Send it to your contact person as a link to a hosted location or if the zip is small enough, attach it. 
+
+# Main Libraries Used
+* Compose
+* Coroutines
+* Navigation
+* Room
+* Dagger Hilt
+* Retrofit
+* OkHttp3
+* Gson
+* Coil
+* Junit
 
