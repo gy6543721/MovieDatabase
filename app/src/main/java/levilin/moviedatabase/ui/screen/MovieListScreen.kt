@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,7 +21,6 @@ import androidx.navigation.NavController
 import levilin.moviedatabase.R
 import levilin.moviedatabase.ui.component.MovieList
 import levilin.moviedatabase.ui.component.SearchBar
-import levilin.moviedatabase.ui.theme.buttonBackgroundColor
 import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.viewmodel.SharedViewModel
@@ -56,9 +56,9 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Button(
                     onClick = {
@@ -68,7 +68,9 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                         }
                     },
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.buttonBackgroundColor)
+                    border = null,
+                    elevation = null,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -84,6 +86,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     } else {
                         "- / -"
                     },
+                    fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.screenTextColor
                 )
 
@@ -95,7 +98,9 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                         }
                     },
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.buttonBackgroundColor)
+                    border = null,
+                    elevation = null,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowForward,

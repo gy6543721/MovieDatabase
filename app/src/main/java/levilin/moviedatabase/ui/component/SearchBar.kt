@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -45,7 +47,8 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", onSearch: (Strin
                 },
             keyboardActions = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
-            )
+            ),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         if(isHintDisplayed) {
             Text(
