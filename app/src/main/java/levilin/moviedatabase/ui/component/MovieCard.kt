@@ -26,7 +26,6 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
 fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel = hiltViewModel(), navController: NavController) {
-
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = modifier
@@ -65,7 +64,6 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
                     overflow = TextOverflow.Ellipsis
                 )
             }
-
             FavoriteButton(entry = entry, viewModel = viewModel)
         }
     }

@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, application: Application): AndroidViewModel(application) {
-
     // API response
     private var movieInfoListResponse: MutableLiveData<NetworkResult<MovieInfo>> = MutableLiveData()
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
@@ -58,7 +57,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         isRemoteLoading.value = true
         updateMovieDetail(id = id)
     }
-
 
     // Local database action
     private fun getAllItems() {

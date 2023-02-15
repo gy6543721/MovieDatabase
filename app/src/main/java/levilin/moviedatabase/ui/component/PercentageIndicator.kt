@@ -10,10 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.VectorProperty
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import levilin.moviedatabase.ui.theme.buttonIconColor
@@ -51,7 +48,6 @@ fun PercentageIndicator(percentage: Float, size: Int) {
 fun getPercentString(percent: Float): String {
     return java.lang.String.format(Locale.US, "%d%%", (percent * 100).toInt())
 }
-
 
 @Composable
 @Preview

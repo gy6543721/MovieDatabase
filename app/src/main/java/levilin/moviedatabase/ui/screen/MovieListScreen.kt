@@ -39,7 +39,6 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
     ) {
         Column {
             Spacer(modifier = Modifier.height(8.dp))
-
             SearchBar(
                 hint = stringResource(id = R.string.search_bar_hint),
                 modifier = Modifier
@@ -51,9 +50,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                 currentPage = 1
                 viewModel.loadMovieList()
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             // Page Indicator
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
@@ -91,9 +88,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     }
                 )
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             MovieList(navController = navController, viewModel = viewModel)
         }
     }
