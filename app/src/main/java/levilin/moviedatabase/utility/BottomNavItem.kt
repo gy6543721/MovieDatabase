@@ -1,4 +1,4 @@
-package levilin.moviedatabase.model.local
+package levilin.moviedatabase.utility
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

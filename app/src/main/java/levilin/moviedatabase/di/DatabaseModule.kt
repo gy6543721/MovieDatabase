@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import levilin.moviedatabase.data.local.LocalDataSource
 import levilin.moviedatabase.data.local.LocalDataSourceDAO
-import levilin.moviedatabase.model.remote.list.MovieResult
+import levilin.moviedatabase.model.list.MovieResult
 import javax.inject.Singleton
 
 @Module

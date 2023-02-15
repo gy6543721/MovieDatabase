@@ -1,7 +1,7 @@
 package levilin.moviedatabase.data.remote
 
-import levilin.moviedatabase.model.remote.detail.MovieDetail
-import levilin.moviedatabase.model.remote.list.MovieInfo
+import levilin.moviedatabase.model.detail.MovieDetail
+import levilin.moviedatabase.model.list.MovieInfo
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

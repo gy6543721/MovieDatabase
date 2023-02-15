@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import levilin.moviedatabase.model.remote.list.MovieResult
+import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable

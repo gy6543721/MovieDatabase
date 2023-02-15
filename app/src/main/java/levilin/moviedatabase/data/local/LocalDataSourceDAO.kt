@@ -2,7 +2,7 @@ package levilin.moviedatabase.data.local
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import levilin.moviedatabase.model.remote.list.MovieResult
+import levilin.moviedatabase.model.list.MovieResult
 
 @Dao
 interface LocalDataSourceDAO {

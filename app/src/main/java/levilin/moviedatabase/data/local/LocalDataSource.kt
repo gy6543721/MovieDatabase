@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import levilin.moviedatabase.model.remote.list.MovieResult
+import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.utility.ConstantValue
 
 

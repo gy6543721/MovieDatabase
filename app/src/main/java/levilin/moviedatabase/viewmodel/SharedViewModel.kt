@@ -14,9 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import levilin.moviedatabase.data.local.LocalRepository
 import levilin.moviedatabase.data.remote.RemoteRepository
-import levilin.moviedatabase.model.remote.detail.MovieDetail
-import levilin.moviedatabase.model.remote.list.MovieResult
-import levilin.moviedatabase.model.remote.list.MovieInfo
+import levilin.moviedatabase.model.detail.MovieDetail
+import levilin.moviedatabase.model.list.MovieResult
+import levilin.moviedatabase.model.list.MovieInfo
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
 import retrofit2.Response

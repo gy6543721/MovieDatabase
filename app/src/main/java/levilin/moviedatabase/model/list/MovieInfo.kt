@@ -1,4 +1,4 @@
-package levilin.moviedatabase.model.remote.list
+package levilin.moviedatabase.model.list
 
 
 import com.google.gson.annotations.SerializedName
