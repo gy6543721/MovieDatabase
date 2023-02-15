@@ -1,7 +1,6 @@
 package levilin.moviedatabase.ui.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -19,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import levilin.moviedatabase.R
+import levilin.moviedatabase.ui.component.LayoutButton
 import levilin.moviedatabase.ui.component.MovieList
 import levilin.moviedatabase.ui.component.SearchBar
-import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
@@ -55,30 +54,22 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Page Indicator
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Button(
+                LayoutButton(
+                    icon = Icons.Default.ArrowBack,
+                    modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage > 1) {
                             currentPage -= 1
                             viewModel.loadMovieList()
                         }
-                    },
-                    shape = CircleShape,
-                    border = null,
-                    elevation = null,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        tint = MaterialTheme.colors.buttonIconColor,
-                        contentDescription = "Previous Page"
-                    )
-                }
-
+                    }
+                )
                 Text(
                     textAlign = TextAlign.Center,
                     text = if (totalPage != Int.MAX_VALUE) {
@@ -89,25 +80,16 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.screenTextColor
                 )
-
-                Button(
+                LayoutButton(
+                    icon = Icons.Default.ArrowForward,
+                    modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage < totalPage) {
                             currentPage += 1
                             viewModel.loadMovieList()
                         }
-                    },
-                    shape = CircleShape,
-                    border = null,
-                    elevation = null,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        tint = MaterialTheme.colors.buttonIconColor,
-                        contentDescription = "Next Page"
-                    )
-                }
+                    }
+                )
             }
 
             Spacer(modifier = Modifier.height(8.dp))

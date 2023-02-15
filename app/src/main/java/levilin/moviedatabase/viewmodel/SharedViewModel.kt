@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -73,7 +72,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private fun insertItem(movieResult: MovieResult) {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.insertItem(movieResult = movieResult)
-            Log.d("TAG","add to database: ${movieResult.id}")
+//            Log.d("TAG","add to database: ${movieResult.id}")
         }
     }
 
@@ -86,7 +85,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private fun deleteItem(movieResult: MovieResult) {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.deleteItem(movieResult = movieResult)
-            Log.d("TAG","remove from database: ${movieResult.id}")
+//            Log.d("TAG","remove from database: ${movieResult.id}")
         }
     }
 
@@ -94,13 +93,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
             favoriteList.value.remove(element = entry)
-            Log.d("TAG","remove favorite: ${entry.id}")
+//            Log.d("TAG","remove favorite: ${entry.id}")
             // Delete from local database
             deleteItem(movieResult = entry)
         } else {
             if (isFavorite && !checkFavorite(input = entry)) {
                 favoriteList.value.add(element = entry)
-                Log.d("TAG","add favorite: ${entry.id}")
+//                Log.d("TAG","add favorite: ${entry.id}")
                 // Insert to local database
                 insertItem(movieResult = entry)
             } else {
@@ -142,7 +141,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         if (checkInternetConnection()) {
             try {
                 val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
-                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
+//                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieInfoListResponse.value = handleMovieListResponse(response = response)
                 currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
@@ -150,6 +149,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 isRemoteLoading.value = false
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
+//                Log.d("TAG", "error : ${movieInfoListResponse.value!!.message}")
             }
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
@@ -198,12 +198,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         if (checkInternetConnection()) {
             try {
                 val response = remoteRepository.remoteDataSource.getMovieDetail(id = id, queries = queries)
-                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
+//                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
                 isRemoteLoading.value = false
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
+//                Log.d("TAG", "error : ${movieDetailResponse.value!!.message}")
             }
         } else {
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")

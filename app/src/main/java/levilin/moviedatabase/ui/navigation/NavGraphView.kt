@@ -1,7 +1,10 @@
 package levilin.moviedatabase.ui.navigation
 
+import android.util.Log
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -13,10 +16,11 @@ import levilin.moviedatabase.ui.screen.MovieListScreen
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
-fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewModel) {
+fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewModel, modifier: Modifier) {
     NavHost(
         navController = navController,
-        startDestination = "movie_list_screen"
+        startDestination = "movie_list_screen",
+        modifier = modifier.systemBarsPadding()
     ) {
         composable("movie_list_screen") {
             MovieListScreen(navController = navController, viewModel = sharedViewModel)
@@ -35,10 +39,13 @@ fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewMo
             val id = remember {
                 navBackStackEntry.arguments!!.getString("id")!!
             }
+            if (id != sharedViewModel.movieDetail.value.id.toString()) {
+                sharedViewModel.loadMovieDetail(id = id)
+            }
+//            Log.d("TAG", "Detail Page ID: $id / ${sharedViewModel.movieDetail.value.id}")
             MovieDetailScreen(
                 navController = navController,
-                viewModel = sharedViewModel,
-                id = id
+                viewModel = sharedViewModel
             )
         }
 

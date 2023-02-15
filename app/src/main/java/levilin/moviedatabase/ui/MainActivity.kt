@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import levilin.moviedatabase.ui.navigation.BottomNavView
@@ -26,8 +28,8 @@ class MainActivity : ComponentActivity() {
             MovieDatabaseTheme {
                 val navController = rememberNavController()
 
-                Scaffold(bottomBar = { BottomNavView(navController = navController) }) {
-                    NavGraphView(navController = navController, sharedViewModel = sharedViewModel)
+                Scaffold(bottomBar = { BottomNavView(navController = navController) }) { innerPadding ->
+                    NavGraphView(navController = navController, sharedViewModel = sharedViewModel, modifier = Modifier.padding(innerPadding))
                 }
             }
         }

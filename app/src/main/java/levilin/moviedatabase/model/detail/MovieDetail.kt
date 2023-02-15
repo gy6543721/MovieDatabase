@@ -11,13 +11,13 @@ data class MovieDetail(
     @SerializedName("belongs_to_collection")
     val belongsToCollection: BelongsToCollection = BelongsToCollection(),
     @SerializedName("budget")
-    val budget: Int = 0,
+    val budget: Long = 0,
     @SerializedName("genres")
     val genres: List<Genre> = listOf(),
     @SerializedName("homepage")
     val homepage: String = "",
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Long = 0,
     @SerializedName("imdb_id")
     val imdbId: String = "",
     @SerializedName("original_language")
@@ -37,9 +37,9 @@ data class MovieDetail(
     @SerializedName("release_date")
     val releaseDate: String = "",
     @SerializedName("revenue")
-    val revenue: Int = 0,
+    val revenue: Long = 0,
     @SerializedName("runtime")
-    val runtime: Int = 0,
+    val runtime: Long = 0,
     @SerializedName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage> = listOf(),
     @SerializedName("status")
@@ -53,5 +53,5 @@ data class MovieDetail(
     @SerializedName("vote_average")
     val voteAverage: Double = 0.0,
     @SerializedName("vote_count")
-    val voteCount: Int = 0
+    val voteCount: Long = 0
 )

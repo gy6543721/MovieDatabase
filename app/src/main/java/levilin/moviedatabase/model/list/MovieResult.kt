@@ -13,7 +13,7 @@ data class MovieResult(
     @PrimaryKey
     @ColumnInfo(name = "ID")
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Long = 0,
     @SerializedName("original_language")
     val originalLanguage: String = "",
     @SerializedName("original_title")
@@ -33,5 +33,5 @@ data class MovieResult(
     @SerializedName("vote_average")
     val voteAverage: Double = 0.0,
     @SerializedName("vote_count")
-    val voteCount: Int = 0
+    val voteCount: Long = 0
 )

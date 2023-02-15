@@ -14,6 +14,8 @@ val LightOrange = Color(0xFFF1AC47)
 val Orange = Color(0xFFFF9800)
 val DarkOrange = Color(0xFF533201)
 
+val LightRed = Color(0xFFFF3939)
+val LightGreen = Color(0xFF9CFF39)
 
 val Colors.screenBackgroundColor: Color
     @Composable
@@ -34,3 +36,11 @@ val Colors.buttonIconColor: Color
 val Colors.favouriteButtonColor: Color
     @Composable
     get() = if (isLight) LightMediumGray else MediumDarkGray
+
+val Colors.indicatorRed: Color
+    @Composable
+    get() = if (isLight) Color.Red else LightRed
+
+val Colors.indicatorGreen: Color
+    @Composable
+    get() = if (isLight) Color.Green else LightGreen
