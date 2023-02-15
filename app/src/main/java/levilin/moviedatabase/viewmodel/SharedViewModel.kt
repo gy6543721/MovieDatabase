@@ -1,5 +1,6 @@
 package levilin.moviedatabase.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
@@ -34,9 +35,9 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 
-    var movieList = mutableStateOf<List<MovieResult>>(listOf())
+    @SuppressLint("MutableCollectionMutableState")
     var favoriteList = mutableStateOf<ArrayList<MovieResult>>(arrayListOf())
-    var favoriteListElement = mutableStateOf<ArrayList<Int>>(arrayListOf())
+    var movieList = mutableStateOf<List<MovieResult>>(listOf())
     var movieDetail = mutableStateOf(MovieDetail())
 
     init {
@@ -56,12 +57,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
             favoriteList.value.remove(element = entry)
-            favoriteListElement.value.remove(element = entry.id)
             Log.d("TAG","remove favorite: ${entry.id}")
         } else {
             if (isFavorite && !checkFavorite(input = entry)) {
                 favoriteList.value.add(element = entry)
-                favoriteListElement.value.add(element = entry.id)
                 Log.d("TAG","add favorite: ${entry.id}")
             } else {
                 return
@@ -70,7 +69,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     private fun checkFavorite(input: MovieResult): Boolean {
-        return favoriteListElement.value.contains(input.id)
+        return favoriteList.value.contains(input)
     }
 
     private fun checkInternetConnection(): Boolean {

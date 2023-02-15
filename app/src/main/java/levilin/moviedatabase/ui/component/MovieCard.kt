@@ -80,9 +80,9 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
 @Composable
 fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel) {
 
-    val favoriteListID by remember { mutableStateOf(viewModel.favoriteListElement) }
+    val favoriteList by remember { mutableStateOf(viewModel.favoriteList) }
     var isFavorite by remember { mutableStateOf(false) }
-    isFavorite = favoriteListID.value.contains(entry.id)
+    isFavorite = favoriteList.value.contains(entry)
     val isStatusChanged by remember { derivedStateOf { isFavorite } }
 
     IconToggleButton(
