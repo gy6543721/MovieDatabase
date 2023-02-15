@@ -30,7 +30,7 @@ fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltVie
         items(itemCount) { rowIndex ->
             if(rowIndex >= itemCount - 1) {
                 LaunchedEffect(key1 = true) {
-                    viewModel.loadMoviesList()
+                    viewModel.loadMovieList()
                 }
             }
             ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController, viewModel = viewModel)
@@ -42,7 +42,7 @@ fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltVie
         }
         if(loadingError.isNotEmpty()) {
             RetrySection(error = loadingError) {
-                viewModel.loadMoviesList()
+                viewModel.loadMovieList()
             }
         }
     }

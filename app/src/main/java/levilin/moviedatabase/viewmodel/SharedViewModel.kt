@@ -43,12 +43,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     init {
         getAllItems()
-        loadMoviesList()
+        loadMovieList()
     }
 
-    fun loadMoviesList() {
+    fun loadMovieList() {
         isRemoteLoading.value = true
-        updateMoviesList(query = searchQuery.value)
+        updateMovieList(query = searchQuery.value)
     }
 
     fun loadFavoriteList() {
@@ -61,9 +61,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
 
+    // Local database action
     private fun getAllItems() {
         viewModelScope.launch(Dispatchers.IO) {
-            localRepository.getAllItems.collect() { itemList ->
+            localRepository.getAllItems.collect { itemList ->
                 favoriteList.value = itemList as ArrayList<MovieResult>
             }
         }
@@ -89,6 +90,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
+    // Add favorite action
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
             favoriteList.value.remove(element = entry)
@@ -124,32 +126,28 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     // For MovieInfo List
-    private fun updateMoviesList(query: String) {
+    private fun updateMovieList(query: String) {
         viewModelScope.launch {
-            getMoviesList(queries = provideMoviesListQueries(query = query, page = currentPage.value))
+            getMovieList(queries = provideMovieListQueries(query = query, page = currentPage.value))
         }
     }
 
-    private fun getMoviesList(queries: Map<String, String>) {
+    private fun getMovieList(queries: Map<String, String>) {
         viewModelScope.launch {
-            getMoviesListSafeCall(queries = queries)
+            getMovieListSafeCall(queries = queries)
         }
     }
 
-    private suspend fun getMoviesListSafeCall(queries: Map<String, String>) {
+    private suspend fun getMovieListSafeCall(queries: Map<String, String>) {
         if (checkInternetConnection()) {
             try {
                 val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
                 Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
-                movieInfoListResponse.value = handleMoviesListResponse(response = response)
-                isRemoteLoading.value = false
-
+                movieInfoListResponse.value = handleMovieListResponse(response = response)
                 currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
-//                Log.d("TAG", "MovieList Response Body Page: ${movieInfoListResponse.value!!.data!!.page}")
-//                Log.d("TAG", "MovieList Response Body: ${movieInfoListResponse.value!!.data!!.movieResults}")
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
-
+                isRemoteLoading.value = false
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
             }
@@ -158,7 +156,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    private fun handleMoviesListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
+    private fun handleMovieListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error(message = "Time Out")
@@ -173,7 +171,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    private fun provideMoviesListQueries(query: String, page: Int): Map<String, String> {
+    private fun provideMovieListQueries(query: String, page: Int): Map<String, String> {
         val queries = HashMap<String, String>()
         queries.apply {
             this["api_key"] = ConstantValue.API_KEY_V3
@@ -202,11 +200,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 val response = remoteRepository.remoteDataSource.getMovieDetail(id = id, queries = queries)
                 Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
-                isRemoteLoading.value = false
-//                Log.d("TAG", "MovieDetail Response Body ID: ${movieDetailResponse.value!!.data!!.id}")
-//                Log.d("TAG", "MovieDetail Response Body: ${movieDetailResponse.value!!.data!!}")
                 movieDetail.value = movieDetailResponse.value!!.data!!
-
+                isRemoteLoading.value = false
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
             }

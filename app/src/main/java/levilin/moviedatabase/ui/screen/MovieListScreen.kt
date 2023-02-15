@@ -50,7 +50,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
             ) { input ->
                 searchQuery = input
                 currentPage = 1
-                viewModel.loadMoviesList()
+                viewModel.loadMovieList()
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -64,7 +64,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     onClick = {
                         if (currentPage > 1) {
                             currentPage -= 1
-                            viewModel.loadMoviesList()
+                            viewModel.loadMovieList()
                         }
                     },
                     shape = CircleShape,
@@ -94,7 +94,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     onClick = {
                         if (currentPage < totalPage) {
                             currentPage += 1
-                            viewModel.loadMoviesList()
+                            viewModel.loadMovieList()
                         }
                     },
                     shape = CircleShape,
