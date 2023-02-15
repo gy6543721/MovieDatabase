@@ -159,7 +159,7 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", onSearch: (Strin
 
 @Composable
 fun MoviesList(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
-    val moviesList by remember { viewModel.moviesList }
+    val moviesList by remember { viewModel.movieList }
     val loadingError by remember { viewModel.loadingError }
     val isLoading by remember { viewModel.isLoading }
 

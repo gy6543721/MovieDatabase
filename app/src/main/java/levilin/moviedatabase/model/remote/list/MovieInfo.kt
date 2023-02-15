@@ -3,7 +3,7 @@ package levilin.moviedatabase.model.remote.list
 
 import com.google.gson.annotations.SerializedName
 
-data class Movies(
+data class MovieInfo(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

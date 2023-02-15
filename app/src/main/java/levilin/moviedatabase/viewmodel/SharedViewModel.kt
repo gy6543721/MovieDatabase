@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import levilin.moviedatabase.data.remote.RemoteRepository
 import levilin.moviedatabase.model.remote.detail.MovieDetail
 import levilin.moviedatabase.model.remote.list.MovieResult
-import levilin.moviedatabase.model.remote.list.Movies
+import levilin.moviedatabase.model.remote.list.MovieInfo
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
 import retrofit2.Response
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, application: Application): AndroidViewModel(application) {
     // API response
-    private var moviesListResponse: MutableLiveData<NetworkResult<Movies>> = MutableLiveData()
+    private var movieInfoListResponse: MutableLiveData<NetworkResult<MovieInfo>> = MutableLiveData()
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
@@ -34,7 +34,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 
-    var moviesList = mutableStateOf<List<MovieResult>>(listOf())
+    var movieList = mutableStateOf<List<MovieResult>>(listOf())
     var favoriteList = mutableStateOf<ArrayList<Int>>(arrayListOf())
     var movieDetail = mutableStateOf(MovieDetail())
 
@@ -84,7 +84,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    // For Movies List
+    // For MovieInfo List
     private fun updateMoviesList(query: String) {
         viewModelScope.launch {
             getMoviesList(queries = provideMoviesListQueries(query = query, page = currentPage.value))
@@ -102,24 +102,24 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             try {
                 val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
                 Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
-                moviesListResponse.value = handleMoviesListResponse(response = response)
+                movieInfoListResponse.value = handleMoviesListResponse(response = response)
                 isLoading.value = false
 
-                currentPage.value = moviesListResponse.value!!.data!!.page
-                totalPage.value = moviesListResponse.value!!.data!!.totalPages
-                Log.d("TAG", "MovieList Response Body Page: ${moviesListResponse.value!!.data!!.page}")
-                Log.d("TAG", "MovieList Response Body: ${moviesListResponse.value!!.data!!.movieResults}")
-                moviesList.value = moviesListResponse.value!!.data!!.movieResults
+                currentPage.value = movieInfoListResponse.value!!.data!!.page
+                totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
+                Log.d("TAG", "MovieList Response Body Page: ${movieInfoListResponse.value!!.data!!.page}")
+                Log.d("TAG", "MovieList Response Body: ${movieInfoListResponse.value!!.data!!.movieResults}")
+                movieList.value = movieInfoListResponse.value!!.data!!.movieResults
 
             } catch (e: Exception) {
-                moviesListResponse.value = NetworkResult.Error(message = e.localizedMessage)
+                movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
             }
         } else {
-            moviesListResponse.value = NetworkResult.Error(message = "No Internet Connection")
+            movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
         }
     }
 
-    private fun handleMoviesListResponse(response: Response<Movies>): NetworkResult<Movies> {
+    private fun handleMoviesListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error(message = "Time Out")
