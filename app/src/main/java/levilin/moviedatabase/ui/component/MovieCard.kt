@@ -42,9 +42,7 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
     ) {
         Box(contentAlignment = Alignment.TopEnd) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
                 Spacer(modifier = Modifier.height(15.dp))
-
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(ConstantValue.IMAGE_BASE_URL + entry.posterPath)
@@ -54,7 +52,6 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
                     modifier = Modifier.size(120.dp),
                     alignment = Alignment.Center
                 )
-
                 Text(
                     text = entry.title,
                     fontSize = 15.sp,

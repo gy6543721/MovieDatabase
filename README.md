@@ -1,6 +1,34 @@
 # MovieDatabase
 [Demo Video](https://youtu.be/tsLmsMGoHyM)  
 [Github Repository (Maybe Private)](https://github.com/gy6543721/MovieDatabase)  
+<br>
+<table>
+	<tr>
+		<td>
+			<img src="pictures/001.png"  height=250>
+		</td>
+		<td>
+			<img src="pictures/004.png"  height=250>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="pictures/002.png"  height=250>
+		</td>
+		<td>
+			<img src="pictures/005.png"  height=250>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="pictures/003.png"  height=250>
+		</td>
+		<td>
+			<img src="pictures/006.png"  height=250>
+		</td>
+	</tr>
+	<table>
+<br>
 
 Coding Challenge
 

@@ -3,6 +3,7 @@ package levilin.moviedatabase.ui.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,8 +18,8 @@ fun RetrySection(
     error: String,
     onRetry: () -> Unit
 ) {
-    Column {
-        Text(error, color = Color.Red, fontSize = 18.sp)
+    Column(modifier = Modifier.padding(5.dp)) {
+        Text(text = error, color = Color.Red, fontSize = 18.sp)
         Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = { onRetry() },
