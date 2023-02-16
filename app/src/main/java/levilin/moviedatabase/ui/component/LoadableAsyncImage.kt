@@ -1,6 +1,5 @@
 package levilin.moviedatabase.ui.component
 
-import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -14,8 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
 
 @Composable
@@ -39,6 +37,7 @@ fun LoadableAsyncImage(
             contentDescription = contentDescription,
             contentScale = contentScale,
             onSuccess = { isLoading = false },
+            onError = { isLoading = false },
             alignment = alignment
         )
         // Loading Indicator

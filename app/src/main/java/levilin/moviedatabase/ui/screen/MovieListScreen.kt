@@ -5,6 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -58,7 +60,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 LayoutButton(
-                    icon = Icons.Default.ArrowBack,
+                    icon = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage > 1) {
@@ -78,7 +80,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     color = MaterialTheme.colors.screenTextColor
                 )
                 LayoutButton(
-                    icon = Icons.Default.ArrowForward,
+                    icon = Icons.Default.KeyboardArrowRight,
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage < totalPage) {

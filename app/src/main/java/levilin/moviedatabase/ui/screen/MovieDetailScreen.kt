@@ -45,7 +45,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 5.dp),
+                    .padding(start = 5.dp, bottom = 5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
