@@ -1,7 +1,6 @@
 # MovieDatabase
 [Demo Video](https://youtu.be/tsLmsMGoHyM)  
 [Github Repository (Maybe Private)](https://github.com/gy6543721/MovieDatabase)  
-<br>
 <table>
 	<tr>
 		<td>
@@ -27,8 +26,7 @@
 			<img src="pictures/006.png"  height=250>
 		</td>
 	</tr>
-	<table>
-<br>
+<table>
 
 Coding Challenge
 
