@@ -28,8 +28,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
-    var loadingError = mutableStateOf("")
-    var isRemoteLoading = mutableStateOf(true)
+    var loadingError = mutableStateOf(value = "")
+    var isRemoteLoading = mutableStateOf(value = true)
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 

@@ -26,15 +26,13 @@ fun BottomNavView(navController: NavController) {
         items.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title,
-                    fontSize = 9.sp) },
+                label = { Text(text = item.title, fontSize = 9.sp) },
                 selectedContentColor = MaterialTheme.colors.buttonIconColor,
                 unselectedContentColor = MaterialTheme.colors.buttonIconColor.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-
                         navController.graph.startDestinationRoute?.let { screen_route ->
                             popUpTo(screen_route) {
                                 saveState = true
