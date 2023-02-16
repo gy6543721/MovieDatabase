@@ -1,6 +1,5 @@
 # MovieDatabase
 [Demo Video](https://youtu.be/tsLmsMGoHyM)  
-[Github Repository (Maybe Private)](https://github.com/gy6543721/MovieDatabase)  
 <table>
 	<tr>
 		<td>
