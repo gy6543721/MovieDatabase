@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.ui.theme.screenBackgroundColor
@@ -43,7 +42,7 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
         Box(contentAlignment = Alignment.TopEnd) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier = Modifier.height(15.dp))
-                AsyncImage(
+                LoadableAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(ConstantValue.IMAGE_BASE_URL + entry.posterPath)
                         .crossfade(true)

@@ -16,9 +16,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import levilin.moviedatabase.ui.component.LayoutButton
+import levilin.moviedatabase.ui.component.LoadableAsyncImage
 import levilin.moviedatabase.ui.component.PercentageIndicator
 import levilin.moviedatabase.ui.component.RetrySection
 import levilin.moviedatabase.ui.theme.indicatorRed
@@ -67,7 +67,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                 // Original Title
                 Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
                 // Poster
-                AsyncImage(
+                LoadableAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(ConstantValue.IMAGE_BASE_URL + movieDetail.posterPath)
                         .crossfade(true)
