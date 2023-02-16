@@ -1,12 +1,12 @@
 package levilin.moviedatabase.model.list
 
-
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import levilin.moviedatabase.utility.ConstantValue
 
-@Entity(tableName = "LOCAL_DATA_LIST")
+@Entity(tableName = ConstantValue.DATABASE_TABLE_NAME)
 data class MovieResult(
     @SerializedName("adult")
     val adult: Boolean = false,

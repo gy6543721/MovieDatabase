@@ -7,5 +7,9 @@ class ConstantValue {
         const val API_KEY_V3 = "87d63612b2cda66250882fcc53b81b7e"
         const val DEFAULT_QUERY = "a"
         const val DATABASE_FILE_NAME = "LOCAL_DATABASE.db"
+        const val DATABASE_TABLE_NAME = "LOCAL_DATA_LIST"
+
+        const val NAV_ITEM_MOVIES = "Movies"
+        const val NAV_ITEM_Favorite = "Favorite"
     }
 }

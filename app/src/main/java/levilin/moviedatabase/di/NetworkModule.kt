@@ -29,13 +29,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideConverterFactory():GsonConverterFactory {
+    fun provideConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
     @Singleton
     @Provides
-    fun provideOkHttpClient():OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)

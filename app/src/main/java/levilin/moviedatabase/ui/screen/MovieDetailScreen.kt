@@ -12,12 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import levilin.moviedatabase.ui.component.LayoutButton
 import levilin.moviedatabase.ui.component.PercentageIndicator
+import levilin.moviedatabase.ui.component.RetrySection
 import levilin.moviedatabase.ui.theme.indicatorRed
 import levilin.moviedatabase.ui.theme.screenBackgroundColor
 import levilin.moviedatabase.ui.theme.screenTextColor
@@ -27,8 +30,10 @@ import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel) {
+fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     val movieDetail by remember { viewModel.movieDetail }
+    val loadingError by remember { viewModel.loadingError }
+    val isLoading by remember { viewModel.isRemoteLoading }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -58,9 +63,9 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel) 
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // English Title
-                Text(text = movieDetail.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
+                Text(text = movieDetail.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                 // Original Title
-                Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
+                Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
                 // Poster
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -84,10 +89,10 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel) 
                             genresString += " / "
                         }
                     }
-                    Text(text = genresString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Medium)
+                    Text(text = genresString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
                 }
                 // Release Date
-                Text(text = movieDetail.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
+                Text(text = movieDetail.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
                 // Overview
                 Text(text = movieDetail.overview, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
             }
@@ -128,12 +133,12 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel) 
                 // Budget & Revenue
                 if (movieDetail.budget != 0L || movieDetail.revenue != 0L) {
                     val budgetString = if (movieDetail.budget != 0L) {
-                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.budget)
+                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.budget).split(".")[0]
                     } else {
                         "-"
                     }
                     val revenueString = if (movieDetail.revenue != 0L) {
-                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.revenue)
+                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.revenue).split(".")[0]
                     } else {
                         "-"
                     }
@@ -141,7 +146,15 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel) 
                 }
             }
         }
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            if(isLoading) {
+                CircularProgressIndicator(color = MaterialTheme.colors.primary)
+            }
+            if(loadingError.isNotEmpty()) {
+                RetrySection(error = loadingError) {
+                    viewModel.loadMovieDetail(id = movieDetail.id.toString())
+                }
+            }
+        }
     }
-
-
 }

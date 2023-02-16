@@ -145,12 +145,15 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
                 isRemoteLoading.value = false
+                loadingError.value = ""
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
+                loadingError.value = movieInfoListResponse.value!!.message.toString()
 //                Log.d("TAG", "error : ${movieInfoListResponse.value!!.message}")
             }
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
+            loadingError.value = movieInfoListResponse.value!!.message.toString()
         }
     }
 
@@ -179,7 +182,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         return queries
     }
 
-    // For Movie Detail
+    // For MovieDetail Page
     private fun updateMovieDetail(id: String) {
         viewModelScope.launch {
             getMovieDetail(id = id, queries = provideMovieDetailQueries())
@@ -200,12 +203,15 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
                 isRemoteLoading.value = false
+                loadingError.value = ""
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
+                loadingError.value = movieDetailResponse.value!!.message.toString()
 //                Log.d("TAG", "error : ${movieDetailResponse.value!!.message}")
             }
         } else {
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
+            loadingError.value = movieDetailResponse.value!!.message.toString()
         }
     }
 

@@ -59,9 +59,9 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
                     text = entry.title,
                     fontSize = 15.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    modifier = Modifier.fillMaxWidth().padding(5.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
             FavoriteButton(entry = entry, viewModel = viewModel)
