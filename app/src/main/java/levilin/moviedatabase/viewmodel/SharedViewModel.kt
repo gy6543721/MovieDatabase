@@ -29,10 +29,14 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
-    var loadingError = mutableStateOf(value = "")
-    var isRemoteLoading = mutableStateOf(value = true)
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
+
+    var errorMovieListMessage = mutableStateOf(value = "")
+    var isMovieListLoading = mutableStateOf(value = true)
+
+    var errorMovieDetailMessage = mutableStateOf(value = "")
+    var isMovieDetailLoading = mutableStateOf(value = true)
 
     var favoriteList = mutableStateOf<List<MovieResult>>(listOf())
     var movieList = mutableStateOf<List<MovieResult>>(listOf())
@@ -44,7 +48,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     fun loadMovieList() {
-        isRemoteLoading.value = true
+        isMovieListLoading.value = true
         updateMovieList(query = searchQuery.value)
     }
 
@@ -53,7 +57,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     fun loadMovieDetail(id: String) {
-        isRemoteLoading.value = true
+        isMovieDetailLoading.value = true
         updateMovieDetail(id = id)
     }
 
@@ -61,7 +65,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private fun getAllItems() {
         viewModelScope.launch {
             localRepository.getAllItems.collect { itemList ->
-                Log.d("TAG", itemList.toString())
                 favoriteList.value = itemList
             }
         }
@@ -142,16 +145,16 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
-                isRemoteLoading.value = false
-                loadingError.value = ""
+                isMovieListLoading.value = false
+                errorMovieListMessage.value = ""
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
-                loadingError.value = movieInfoListResponse.value!!.message.toString()
+                errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
 //                Log.d("TAG", "error : ${movieInfoListResponse.value!!.message}")
             }
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
-            loadingError.value = movieInfoListResponse.value!!.message.toString()
+            errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
         }
     }
 
@@ -200,16 +203,16 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 //                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
-                isRemoteLoading.value = false
-                loadingError.value = ""
+                isMovieDetailLoading.value = false
+                errorMovieDetailMessage.value = ""
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
-                loadingError.value = movieDetailResponse.value!!.message.toString()
+                errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
 //                Log.d("TAG", "error : ${movieDetailResponse.value!!.message}")
             }
         } else {
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
-            loadingError.value = movieDetailResponse.value!!.message.toString()
+            errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
         }
     }
 

@@ -18,8 +18,8 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 @Composable
 fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     val moviesList by remember { viewModel.movieList }
-    val loadingError by remember { viewModel.loadingError }
-    val isLoading by remember { viewModel.isRemoteLoading }
+    val loadingErrorMessage by remember { viewModel.errorMovieListMessage }
+    val isLoading by remember { viewModel.isMovieListLoading }
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount = if(moviesList.size % 2 == 0) {
@@ -36,14 +36,14 @@ fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltVie
             ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController, viewModel = viewModel)
         }
     }
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-        if(isLoading) {
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
+        if(isLoading && loadingErrorMessage.isEmpty()) {
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
         }
-        if(loadingError.isNotEmpty()) {
-            RetrySection(error = loadingError) {
+        if(loadingErrorMessage.isNotEmpty()) {
+            RetrySection(error = loadingErrorMessage, onRetry = {
                 viewModel.loadMovieList()
-            }
+            })
         }
     }
 }

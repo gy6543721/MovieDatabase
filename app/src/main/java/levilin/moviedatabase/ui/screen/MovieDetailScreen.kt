@@ -32,8 +32,8 @@ import java.util.*
 @Composable
 fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     val movieDetail by remember { viewModel.movieDetail }
-    val loadingError by remember { viewModel.loadingError }
-    val isLoading by remember { viewModel.isRemoteLoading }
+    val loadingErrorMessage by remember { viewModel.errorMovieDetailMessage }
+    val isLoading by remember { viewModel.isMovieDetailLoading }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -144,6 +144,16 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     }
                     Text(text = "・Budget / Revenue :   \n \u0020 \u0020 $budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                 }
+            }
+        }
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
+            if(isLoading && loadingErrorMessage.isEmpty()) {
+                CircularProgressIndicator(color = MaterialTheme.colors.primary)
+            }
+            if(loadingErrorMessage.isNotEmpty()) {
+                RetrySection(error = loadingErrorMessage, onRetry = {
+                    viewModel.loadMovieDetail(id = movieDetail.id.toString())
+                })
             }
         }
     }
