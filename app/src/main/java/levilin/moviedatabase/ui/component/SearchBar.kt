@@ -1,6 +1,7 @@
 package levilin.moviedatabase.ui.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import levilin.moviedatabase.R
 import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.ui.theme.screenTextColor
+import levilin.moviedatabase.ui.theme.searchBarBorderColor
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
@@ -83,10 +85,11 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
             modifier = Modifier
                 .fillMaxWidth()
                 .shadow(5.dp, CircleShape)
+                .background(color = MaterialTheme.colors.background)
                 .border(
                     border = BorderStroke(
                         width = 1.dp,
-                        color = MaterialTheme.colors.screenTextColor
+                        color = MaterialTheme.colors.searchBarBorderColor
                     ), shape = RoundedCornerShape(50)
                 )
                 .align(Alignment.Center)

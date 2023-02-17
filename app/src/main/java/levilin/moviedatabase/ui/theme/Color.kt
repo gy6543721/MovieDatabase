@@ -44,3 +44,7 @@ val Colors.indicatorRed: Color
 val Colors.indicatorGreen: Color
     @Composable
     get() = if (isLight) Color.Green else LightGreen
+
+val Colors.searchBarBorderColor: Color
+    @Composable
+    get() = if (isLight) MediumGray else LightGray
