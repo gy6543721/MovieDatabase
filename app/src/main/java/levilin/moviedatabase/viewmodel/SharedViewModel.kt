@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -29,9 +28,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
+    var displayQuery = mutableStateOf(value = "")
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
-
+    
     var errorMovieListMessage = mutableStateOf(value = "")
     var isMovieListLoading = mutableStateOf(value = true)
 
@@ -145,7 +145,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
-                isMovieListLoading.value = false
                 errorMovieListMessage.value = ""
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
@@ -156,6 +155,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
         }
+        isMovieListLoading.value = false
     }
 
     private fun handleMovieListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
@@ -203,7 +203,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 //                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
-                isMovieDetailLoading.value = false
                 errorMovieDetailMessage.value = ""
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
@@ -214,6 +213,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
         }
+        isMovieDetailLoading.value = false
     }
 
     private fun handleMovieDetailResponse(response: Response<MovieDetail>): NetworkResult<MovieDetail> {

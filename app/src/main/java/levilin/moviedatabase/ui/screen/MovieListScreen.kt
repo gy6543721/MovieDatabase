@@ -8,9 +8,11 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,13 +26,14 @@ import levilin.moviedatabase.ui.component.SearchBar
 import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     // Focus Control
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
-    var searchQuery by remember { viewModel.searchQuery }
-    var currentPage by remember { viewModel.currentPage }
+    val currentPage by remember { viewModel.currentPage }
     val totalPage by remember { viewModel.totalPage }
 
     Surface(
@@ -44,12 +47,14 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .focusRequester(focusRequester)
-            ) { input ->
-                searchQuery = input
-                currentPage = 1
-                viewModel.loadMovieList()
-            }
+                    .focusRequester(focusRequester),
+                viewModel = viewModel,
+                onSearch = { input ->
+                    viewModel.searchQuery.value = input
+                    viewModel.currentPage.value = 1
+                    viewModel.loadMovieList()
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
             // Page Indicator
             Row(
@@ -62,9 +67,10 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage > 1) {
-                            currentPage -= 1
+                            viewModel.currentPage.value -= 1
                             viewModel.loadMovieList()
                         }
+                        focusManager.clearFocus()
                     }
                 )
                 Text(
@@ -82,9 +88,10 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage < totalPage) {
-                            currentPage += 1
+                            viewModel.currentPage.value += 1
                             viewModel.loadMovieList()
                         }
+                        focusManager.clearFocus()
                     }
                 )
             }

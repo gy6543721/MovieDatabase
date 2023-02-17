@@ -56,104 +56,107 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     Text(text = "18+", color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
                 }
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // English Title
-                Text(text = movieDetail.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-                // Original Title
-                Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
-                // Poster
-                LoadableAsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(ConstantValue.IMAGE_BASE_URL + movieDetail.posterPath)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = movieDetail.title,
+            if (isLoading) {
+                // Loading Indicator & Retry Section
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
+                    if(loadingErrorMessage.isEmpty()) {
+                        CircularProgressIndicator(color = MaterialTheme.colors.primary)
+                    } else {
+                        RetrySection(error = loadingErrorMessage, onRetry = {
+                            viewModel.loadMovieDetail(id = movieDetail.id.toString())
+                        })
+                    }
+                }
+            } else {
+                Column(
                     modifier = Modifier
-                        .size(200.dp)
-                        .padding(10.dp),
-                    alignment = Alignment.Center
-                )
-                // Vote Indicator
-                PercentageIndicator(percentage = movieDetail.voteAverage.toFloat() / 10f, size = 60)
-                // Genres
-                if (movieDetail.genres.isNotEmpty()) {
-                    var genresString = ""
-                    for (i in movieDetail.genres.indices) {
-                        genresString += movieDetail.genres[i].name
-                        if (i < movieDetail.genres.size-1) {
-                            genresString += " / "
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // English Title
+                    Text(text = movieDetail.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+                    // Original Title
+                    Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
+                    // Poster
+                    LoadableAsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(ConstantValue.IMAGE_BASE_URL + movieDetail.posterPath)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = movieDetail.title,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .padding(10.dp),
+                        alignment = Alignment.Center
+                    )
+                    // Vote Indicator
+                    PercentageIndicator(percentage = movieDetail.voteAverage.toFloat() / 10f, size = 60)
+                    // Genres
+                    if (movieDetail.genres.isNotEmpty()) {
+                        var genresString = ""
+                        for (i in movieDetail.genres.indices) {
+                            genresString += movieDetail.genres[i].name
+                            if (i < movieDetail.genres.size-1) {
+                                genresString += " / "
+                            }
                         }
+                        Text(text = genresString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
                     }
-                    Text(text = genresString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
+                    // Release Date
+                    Text(text = movieDetail.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
+                    // Overview
+                    Text(text = movieDetail.overview, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
                 }
-                // Release Date
-                Text(text = movieDetail.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
-                // Overview
-                Text(text = movieDetail.overview, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
-                horizontalAlignment = Alignment.Start
-            ) {
-                // Language
-                if (movieDetail.spokenLanguages.isNotEmpty()) {
-                    var languageString = "・Language :  \n"
-                    for (i in movieDetail.spokenLanguages.indices) {
-                        languageString += "\u0020 \u0020 ${movieDetail.spokenLanguages[i].englishName}"
-                        if (movieDetail.spokenLanguages[i].name.isNotEmpty() || movieDetail.spokenLanguages[i].name != "") {
-                            languageString += "\u0020 (${movieDetail.spokenLanguages[i].name})"
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    // Language
+                    if (movieDetail.spokenLanguages.isNotEmpty()) {
+                        var languageString = "・Language :  \n"
+                        for (i in movieDetail.spokenLanguages.indices) {
+                            languageString += "\u0020 \u0020 ${movieDetail.spokenLanguages[i].englishName}"
+                            if (movieDetail.spokenLanguages[i].name.isNotEmpty() || movieDetail.spokenLanguages[i].name != "") {
+                                languageString += "\u0020 (${movieDetail.spokenLanguages[i].name})"
+                            }
+                            if (i < movieDetail.spokenLanguages.size-1) {
+                                languageString += "\n"
+                            }
                         }
-                        if (i < movieDetail.spokenLanguages.size-1) {
-                            languageString += "\n"
-                        }
+                        Text(text = languageString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                     }
-                    Text(text = languageString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
+                    // Production Company
+                    if (movieDetail.productionCompanies.isNotEmpty()) {
+                        var producerString = "・Production Company : \n"
+                        for (i in movieDetail.productionCompanies.indices) {
+                            producerString += "\u0020 \u0020 ${movieDetail.productionCompanies[i].name}"
+                            if (movieDetail.productionCompanies[i].originCountry.isNotEmpty() || movieDetail.productionCompanies[i].originCountry != "") {
+                                producerString += "\u0020 (${movieDetail.productionCompanies[i].originCountry})"
+                            }
+                            if (i < movieDetail.productionCompanies.size-1) {
+                                producerString += "\n"
+                            }
+                        }
+                        Text(text = producerString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
+                    }
+                    // Budget & Revenue
+                    if (movieDetail.budget != 0L || movieDetail.revenue != 0L) {
+                        val budgetString = if (movieDetail.budget != 0L) {
+                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.budget).split(".")[0]
+                        } else {
+                            "-"
+                        }
+                        val revenueString = if (movieDetail.revenue != 0L) {
+                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.revenue).split(".")[0]
+                        } else {
+                            "-"
+                        }
+                        Text(text = "・Budget / Revenue :   \n \u0020 \u0020 $budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
+                    }
                 }
-                // Production Company
-                if (movieDetail.productionCompanies.isNotEmpty()) {
-                    var producerString = "・Production Company : \n"
-                    for (i in movieDetail.productionCompanies.indices) {
-                        producerString += "\u0020 \u0020 ${movieDetail.productionCompanies[i].name}"
-                        if (movieDetail.productionCompanies[i].originCountry.isNotEmpty() || movieDetail.productionCompanies[i].originCountry != "") {
-                            producerString += "\u0020 (${movieDetail.productionCompanies[i].originCountry})"
-                        }
-                        if (i < movieDetail.productionCompanies.size-1) {
-                            producerString += "\n"
-                        }
-                    }
-                    Text(text = producerString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
-                }
-                // Budget & Revenue
-                if (movieDetail.budget != 0L || movieDetail.revenue != 0L) {
-                    val budgetString = if (movieDetail.budget != 0L) {
-                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.budget).split(".")[0]
-                    } else {
-                        "-"
-                    }
-                    val revenueString = if (movieDetail.revenue != 0L) {
-                        NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.revenue).split(".")[0]
-                    } else {
-                        "-"
-                    }
-                    Text(text = "・Budget / Revenue :   \n \u0020 \u0020 $budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
-                }
-            }
-        }
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
-            if(isLoading && loadingErrorMessage.isEmpty()) {
-                CircularProgressIndicator(color = MaterialTheme.colors.primary)
-            }
-            if(loadingErrorMessage.isNotEmpty()) {
-                RetrySection(error = loadingErrorMessage, onRetry = {
-                    viewModel.loadMovieDetail(id = movieDetail.id.toString())
-                })
             }
         }
     }
