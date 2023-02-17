@@ -1,9 +1,9 @@
 package levilin.moviedatabase.ui.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,6 +15,7 @@ import levilin.moviedatabase.ui.screen.MovieDetailScreen
 import levilin.moviedatabase.ui.screen.MovieListScreen
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewModel, modifier: Modifier) {
     NavHost(

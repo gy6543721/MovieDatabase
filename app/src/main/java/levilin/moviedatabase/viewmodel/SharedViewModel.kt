@@ -49,6 +49,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun loadMovieList() {
         isMovieListLoading.value = true
+        if (searchQuery.value != ConstantValue.DEFAULT_QUERY && displayQuery.value != "") {
+            searchQuery.value = displayQuery.value
+        }
+        if (currentPage.value > totalPage.value) {
+            currentPage.value = 1
+        }
         updateMovieList(query = searchQuery.value)
     }
 

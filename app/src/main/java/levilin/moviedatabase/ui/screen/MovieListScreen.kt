@@ -33,7 +33,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    val currentPage by remember { viewModel.currentPage }
+    var currentPage by remember { viewModel.currentPage }
     val totalPage by remember { viewModel.totalPage }
 
     Surface(
@@ -67,7 +67,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage > 1) {
-                            viewModel.currentPage.value -= 1
+                            currentPage -= 1
                             viewModel.loadMovieList()
                         }
                         focusManager.clearFocus()
@@ -88,7 +88,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     modifier = Modifier.size(32.dp),
                     onClick = {
                         if (currentPage < totalPage) {
-                            viewModel.currentPage.value += 1
+                            currentPage += 1
                             viewModel.loadMovieList()
                         }
                         focusManager.clearFocus()
