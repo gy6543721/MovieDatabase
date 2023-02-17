@@ -33,7 +33,7 @@ import java.util.*
 fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     val movieDetail by remember { viewModel.movieDetail }
     val loadingErrorMessage by remember { viewModel.errorMovieDetailMessage }
-    val isLoading by remember { viewModel.isMovieDetailLoading }
+    val isLoading by remember { derivedStateOf { viewModel.isMovieDetailLoading } }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -56,7 +56,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     Text(text = "18+", color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
                 }
             }
-            if (isLoading) {
+            if (isLoading.value) {
                 // Loading Indicator & Retry Section
                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
                     if(loadingErrorMessage.isEmpty()) {

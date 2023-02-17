@@ -20,6 +20,7 @@ import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.math.abs
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, application: Application): AndroidViewModel(application) {
@@ -52,9 +53,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         if (searchQuery.value != ConstantValue.DEFAULT_QUERY && displayQuery.value != "") {
             searchQuery.value = displayQuery.value
         }
-        if (currentPage.value > totalPage.value) {
-            currentPage.value = 1
-        }
         updateMovieList(query = searchQuery.value)
     }
 
@@ -65,6 +63,24 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun loadMovieDetail(id: String) {
         isMovieDetailLoading.value = true
         updateMovieDetail(id = id)
+    }
+
+    fun moveCurrentPage(input: Int) {
+        if (input > 0) {
+            if (currentPage.value < totalPage.value) {
+                currentPage.value += input
+                loadMovieList()
+            } else {
+                return
+            }
+        } else {
+            if (currentPage.value > 1) {
+                currentPage.value -= abs(input)
+                loadMovieList()
+            } else {
+                return
+            }
+        }
     }
 
     // Local database action
@@ -148,7 +164,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
 //                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieInfoListResponse.value = handleMovieListResponse(response = response)
-                currentPage.value = movieInfoListResponse.value!!.data!!.page
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
                 errorMovieListMessage.value = ""
@@ -160,6 +175,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
+        }
+
+        if (currentPage.value > totalPage.value) {
+            currentPage.value = 1
         }
         isMovieListLoading.value = false
     }
