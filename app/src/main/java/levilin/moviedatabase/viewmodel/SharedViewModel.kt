@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +34,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     var currentPage = mutableStateOf(value = 1)
     var totalPage = mutableStateOf(value = Int.MAX_VALUE)
 
-    var favoriteList = mutableStateOf<ArrayList<MovieResult>>(arrayListOf())
+    var favoriteList = mutableStateOf<List<MovieResult>>(listOf())
     var movieList = mutableStateOf<List<MovieResult>>(listOf())
     var movieDetail = mutableStateOf(MovieDetail())
 
@@ -58,9 +59,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     // Local database action
     private fun getAllItems() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             localRepository.getAllItems.collect { itemList ->
-                favoriteList.value = itemList as ArrayList<MovieResult>
+                Log.d("TAG", itemList.toString())
+                favoriteList.value = itemList
             }
         }
     }
@@ -88,13 +90,11 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     // Add favorite action
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
-            favoriteList.value.remove(element = entry)
 //            Log.d("TAG","remove favorite: ${entry.id}")
             // Delete from local database
             deleteItem(movieResult = entry)
         } else {
             if (isFavorite && !checkFavorite(input = entry)) {
-                favoriteList.value.add(element = entry)
 //                Log.d("TAG","add favorite: ${entry.id}")
                 // Insert to local database
                 insertItem(movieResult = entry)

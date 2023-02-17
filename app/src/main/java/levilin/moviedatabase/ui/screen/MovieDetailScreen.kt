@@ -146,15 +146,5 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                 }
             }
         }
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            if(isLoading) {
-                CircularProgressIndicator(color = MaterialTheme.colors.primary)
-            }
-            if(loadingError.isNotEmpty()) {
-                RetrySection(error = loadingError) {
-                    viewModel.loadMovieDetail(id = movieDetail.id.toString())
-                }
-            }
-        }
     }
 }

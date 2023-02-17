@@ -16,7 +16,6 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
 fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel) {
-
     val favoriteList by remember { mutableStateOf(viewModel.favoriteList) }
     var isFavorite by remember { mutableStateOf(false) }
     isFavorite = favoriteList.value.contains(entry)
