@@ -1,6 +1,5 @@
 package levilin.moviedatabase.ui.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -11,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import levilin.moviedatabase.ui.theme.buttonIconColor
+import levilin.moviedatabase.utility.clickableSingle
 
 
 @Composable
@@ -19,7 +19,7 @@ fun LayoutButton(icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .clip(CircleShape)
-            .clickable { onClick() }
+            .clickableSingle { onClick() }
             .then(modifier),
     ) {
         Icon(

@@ -20,7 +20,7 @@ import levilin.moviedatabase.ui.theme.indicatorRed
 
 @Composable
 fun RetrySection(error: String, onRetry: () -> Unit) {
-    Column(modifier = Modifier.padding(5.dp)) {
+    Column(modifier = Modifier.padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = error, color = MaterialTheme.colors.indicatorRed, fontSize = 15.sp, textAlign = TextAlign.Center)
         Spacer(modifier = Modifier.height(8.dp))
         Button(

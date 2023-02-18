@@ -4,12 +4,15 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import levilin.moviedatabase.data.local.LocalRepository
 import levilin.moviedatabase.data.remote.RemoteRepository
@@ -50,7 +53,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun loadMovieList() {
         isMovieListLoading.value = true
         getMovieList(queries = provideMovieListQueries(query = searchQuery.value, page = currentPage.value))
-//        updateMovieList(query = searchQuery.value)
     }
 
     fun loadFavoriteList() {
@@ -60,7 +62,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     fun loadMovieDetail(id: String) {
         isMovieDetailLoading.value = true
         getMovieDetail(id = id, queries = provideMovieDetailQueries())
-//        updateMovieDetail(id = id)
     }
 
     fun moveCurrentPage(value: Int) {
@@ -69,6 +70,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             return
         } else {
             currentPage.value = targetPage
+        }
+        if (currentPage.value != movieInfoListResponse.value?.data?.page) {
             loadMovieList()
         }
     }
@@ -85,7 +88,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private fun insertItem(movieResult: MovieResult) {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.insertItem(movieResult = movieResult)
-//            Log.d("TAG","add to database: ${movieResult.id}")
         }
     }
 
@@ -98,19 +100,16 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private fun deleteItem(movieResult: MovieResult) {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.deleteItem(movieResult = movieResult)
-//            Log.d("TAG","remove from database: ${movieResult.id}")
         }
     }
 
     // Add favorite action
     fun favoriteAction(isFavorite: Boolean, entry: MovieResult) {
         if (!isFavorite && checkFavorite(input = entry)) {
-//            Log.d("TAG","remove favorite: ${entry.id}")
             // Delete from local database
             deleteItem(movieResult = entry)
         } else {
             if (isFavorite && !checkFavorite(input = entry)) {
-//                Log.d("TAG","add favorite: ${entry.id}")
                 // Insert to local database
                 insertItem(movieResult = entry)
             } else {
@@ -141,12 +140,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     // For MovieInfo List
-    private fun updateMovieList(query: String) {
-        viewModelScope.launch {
-            getMovieList(queries = provideMovieListQueries(query = query, page = currentPage.value))
-        }
-    }
-
     private fun getMovieList(queries: Map<String, String>) {
         viewModelScope.launch {
             getMovieListSafeCall(queries = queries)
@@ -162,7 +155,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
                 if (currentPage.value > totalPage.value) {
                     currentPage.value = 1
-                    loadMovieList()
+                    getMovieList(queries = provideMovieListQueries(query = searchQuery.value, page = currentPage.value))
+                }
+                if (currentPage.value != movieInfoListResponse.value!!.data!!.page) {
+                    return
                 }
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
                 errorMovieListMessage.value = ""
@@ -176,6 +172,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
         }
         isMovieListLoading.value = false
+        Log.d("TAG", "currentPage: ${currentPage.value}")
     }
 
     private fun handleMovieListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
@@ -204,12 +201,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     // For MovieDetail Page
-    private fun updateMovieDetail(id: String) {
-        viewModelScope.launch {
-            getMovieDetail(id = id, queries = provideMovieDetailQueries())
-        }
-    }
-
     private fun getMovieDetail(id: String, queries: Map<String, String>) {
         viewModelScope.launch {
             getMovieDetailSafeCall(id = id, queries = queries)
