@@ -49,7 +49,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun loadMovieList() {
         isMovieListLoading.value = true
-        updateMovieList(query = searchQuery.value)
+        getMovieList(queries = provideMovieListQueries(query = searchQuery.value, page = currentPage.value))
+//        updateMovieList(query = searchQuery.value)
     }
 
     fun loadFavoriteList() {
@@ -58,7 +59,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun loadMovieDetail(id: String) {
         isMovieDetailLoading.value = true
-        updateMovieDetail(id = id)
+        getMovieDetail(id = id, queries = provideMovieDetailQueries())
+//        updateMovieDetail(id = id)
     }
 
     fun moveCurrentPage(value: Int) {
@@ -231,7 +233,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
         }
-        isMovieDetailLoading.value = false
+
+        if (id == movieDetail.value.id.toString()) {
+            isMovieDetailLoading.value = false
+        } else {
+            getMovieDetail(id = id, queries = provideMovieDetailQueries())
+        }
     }
 
     private fun handleMovieDetailResponse(response: Response<MovieDetail>): NetworkResult<MovieDetail> {

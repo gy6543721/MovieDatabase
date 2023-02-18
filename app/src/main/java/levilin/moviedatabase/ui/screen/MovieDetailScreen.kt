@@ -35,12 +35,14 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
     val loadingErrorMessage by remember { mutableStateOf(value = viewModel.errorMovieDetailMessage) }
     val isLoading by remember { mutableStateOf(value = viewModel.isMovieDetailLoading) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colors.screenBackgroundColor)
-        .verticalScroll(rememberScrollState())
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.screenBackgroundColor)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Spacer(modifier = Modifier.height(15.dp))
             Row(
                 modifier = Modifier
@@ -56,18 +58,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     Text(text = "18+", color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
                 }
             }
-            if (isLoading.value) {
-                // Loading Indicator & Retry Section
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
-                    if(loadingErrorMessage.value.isBlank()) {
-                        CircularProgressIndicator(color = MaterialTheme.colors.primary)
-                    } else {
-                        RetrySection(error = loadingErrorMessage.value, onRetry = {
-                            viewModel.loadMovieDetail(id = movieDetail.value.id.toString())
-                        })
-                    }
-                }
-            } else {
+            if (!isLoading.value) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -157,6 +148,18 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                         Text(text = "・Budget / Revenue :   \n \u0020 \u0020 $budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                     }
                 }
+            }
+        }
+    }
+    if (isLoading.value) {
+        // Loading Indicator & Retry Section
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
+            if(loadingErrorMessage.value.isBlank()) {
+                CircularProgressIndicator(color = MaterialTheme.colors.primary)
+            } else {
+                RetrySection(error = loadingErrorMessage.value, onRetry = {
+                    viewModel.loadMovieDetail(id = movieDetail.value.id.toString())
+                })
             }
         }
     }
