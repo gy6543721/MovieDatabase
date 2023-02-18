@@ -1,5 +1,6 @@
 package levilin.moviedatabase.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,15 +45,17 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     // Search Query
-    val inputText by remember { viewModel.displayQuery }
+
+    val searchQuery by remember { mutableStateOf(value = viewModel.searchQuery) }
+    val inputText by remember { mutableStateOf(value = viewModel.displayQuery) }
     var isHintDisplayed by remember { mutableStateOf(value = hint != "") }
 
     val trailingIconView = @Composable {
         IconButton(
             onClick = {
                 isHintDisplayed = true
-                viewModel.displayQuery.value = ""
-                viewModel.searchQuery.value = ConstantValue.DEFAULT_QUERY
+                inputText.value = ""
+                searchQuery.value = ConstantValue.DEFAULT_QUERY
                 viewModel.loadMovieList()
             },
             modifier = Modifier.padding(end = 5.dp)
@@ -68,16 +71,16 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
 
     Box(modifier = modifier) {
         TextField(
-            value = inputText,
+            value = inputText.value,
             onValueChange = { inputValue ->
-                viewModel.displayQuery.value = inputValue
+                inputText.value = inputValue
                 if (inputValue.isBlank()) {
-                    isHintDisplayed = true
                     onSearch(ConstantValue.DEFAULT_QUERY)
                 } else {
                     isHintDisplayed = false
                     onSearch(inputValue)
                 }
+                Log.d("TAG", inputValue)
             },
             maxLines = 1,
             singleLine = true,
@@ -94,7 +97,7 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
                 )
                 .align(Alignment.Center)
                 .onFocusChanged { focusState ->
-                    isHintDisplayed = !focusState.isFocused && inputText.isBlank()
+                    isHintDisplayed = !focusState.isFocused && inputText.value.isBlank()
                     if (!focusState.isFocused) {
                         keyboardController?.hide()
                     }
@@ -105,10 +108,13 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
                 unfocusedIndicatorColor = Color.Transparent
             ),
             keyboardActions = KeyboardActions(
-                onDone = { focusManager.clearFocus() }
+                onDone = {
+                    viewModel.loadMovieList()
+                    focusManager.clearFocus()
+                }
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            trailingIcon = if (inputText.isNotBlank()) trailingIconView else null
+            trailingIcon = if (inputText.value.isNotEmpty()) trailingIconView else null
         )
         if(isHintDisplayed) {
             Text(

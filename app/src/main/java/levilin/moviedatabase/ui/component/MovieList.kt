@@ -14,15 +14,15 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
 fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
-    val moviesList by remember { viewModel.movieList }
-    val loadingErrorMessage by remember { viewModel.errorMovieListMessage }
-    val isLoading by remember { derivedStateOf { viewModel.isMovieListLoading } }
+    val moviesList by remember { mutableStateOf(value = viewModel.movieList) }
+    val loadingErrorMessage by remember { mutableStateOf(value = viewModel.errorMovieListMessage) }
+    val isLoading by remember { mutableStateOf(value = viewModel.isMovieListLoading) }
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        val itemCount = if(moviesList.size % 2 == 0) {
-            moviesList.size / 2
+        val itemCount = if(moviesList.value.size % 2 == 0) {
+            moviesList.value.size / 2
         } else {
-            moviesList.size / 2 + 1
+            moviesList.value.size / 2 + 1
         }
         items(itemCount) { rowIndex ->
             if(rowIndex >= itemCount - 1) {
@@ -30,15 +30,15 @@ fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltVie
                     viewModel.loadMovieList()
                 }
             }
-            ListRow(rowIndex = rowIndex, entries = moviesList, navController = navController, viewModel = viewModel)
+            ListRow(rowIndex = rowIndex, entries = moviesList.value, navController = navController, viewModel = viewModel)
         }
     }
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
-        if(isLoading.value && loadingErrorMessage.isEmpty()) {
+        if(isLoading.value && loadingErrorMessage.value.isBlank()) {
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
         }
-        if(loadingErrorMessage.isNotEmpty()) {
-            RetrySection(error = loadingErrorMessage, onRetry = {
+        if(loadingErrorMessage.value.isNotBlank()) {
+            RetrySection(error = loadingErrorMessage.value, onRetry = {
                 viewModel.loadMovieList()
             })
         }

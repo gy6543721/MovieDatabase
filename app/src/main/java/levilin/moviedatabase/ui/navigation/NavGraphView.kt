@@ -36,13 +36,7 @@ fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewMo
                     type = NavType.StringType
                 }
             )
-        ) { navBackStackEntry ->
-            val id = remember {
-                navBackStackEntry.arguments!!.getString("id")!!
-            }
-            if (id != sharedViewModel.movieDetail.value.id.toString()) {
-                sharedViewModel.loadMovieDetail(id = id)
-            }
+        ) {
 //            Log.d("TAG", "Detail Page ID: $id / ${sharedViewModel.movieDetail.value.id}")
             MovieDetailScreen(
                 navController = navController,

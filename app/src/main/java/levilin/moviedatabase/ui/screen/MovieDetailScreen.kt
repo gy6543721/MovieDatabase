@@ -31,9 +31,9 @@ import java.util.*
 
 @Composable
 fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
-    val movieDetail by remember { viewModel.movieDetail }
-    val loadingErrorMessage by remember { viewModel.errorMovieDetailMessage }
-    val isLoading by remember { derivedStateOf { viewModel.isMovieDetailLoading } }
+    val movieDetail by remember { mutableStateOf(value = viewModel.movieDetail) }
+    val loadingErrorMessage by remember { mutableStateOf(value = viewModel.errorMovieDetailMessage) }
+    val isLoading by remember { mutableStateOf(value = viewModel.isMovieDetailLoading) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -52,18 +52,18 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                 // Back Button
                 LayoutButton(icon = Icons.Default.ArrowBack, modifier = Modifier.size(32.dp), onClick = { navController.popBackStack() })
                 // Adult
-                if (movieDetail.adult) {
+                if (movieDetail.value.adult) {
                     Text(text = "18+", color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
                 }
             }
             if (isLoading.value) {
                 // Loading Indicator & Retry Section
                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
-                    if(loadingErrorMessage.isEmpty()) {
+                    if(loadingErrorMessage.value.isBlank()) {
                         CircularProgressIndicator(color = MaterialTheme.colors.primary)
                     } else {
-                        RetrySection(error = loadingErrorMessage, onRetry = {
-                            viewModel.loadMovieDetail(id = movieDetail.id.toString())
+                        RetrySection(error = loadingErrorMessage.value, onRetry = {
+                            viewModel.loadMovieDetail(id = movieDetail.value.id.toString())
                         })
                     }
                 }
@@ -75,38 +75,38 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // English Title
-                    Text(text = movieDetail.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+                    Text(text = movieDetail.value.title, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                     // Original Title
-                    Text(text = movieDetail.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
+                    Text(text = movieDetail.value.originalTitle, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
                     // Poster
                     LoadableAsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(ConstantValue.IMAGE_BASE_URL + movieDetail.posterPath)
+                            .data(ConstantValue.IMAGE_BASE_URL + movieDetail.value.posterPath)
                             .crossfade(true)
                             .build(),
-                        contentDescription = movieDetail.title,
+                        contentDescription = movieDetail.value.title,
                         modifier = Modifier
                             .size(200.dp)
                             .padding(10.dp),
                         alignment = Alignment.Center
                     )
                     // Vote Indicator
-                    PercentageIndicator(percentage = movieDetail.voteAverage.toFloat() / 10f, size = 60)
+                    PercentageIndicator(percentage = movieDetail.value.voteAverage.toFloat() / 10f, size = 60)
                     // Genres
-                    if (movieDetail.genres.isNotEmpty()) {
+                    if (movieDetail.value.genres.isNotEmpty()) {
                         var genresString = ""
-                        for (i in movieDetail.genres.indices) {
-                            genresString += movieDetail.genres[i].name
-                            if (i < movieDetail.genres.size-1) {
+                        for (i in movieDetail.value.genres.indices) {
+                            genresString += movieDetail.value.genres[i].name
+                            if (i < movieDetail.value.genres.size-1) {
                                 genresString += " / "
                             }
                         }
                         Text(text = genresString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
                     }
                     // Release Date
-                    Text(text = movieDetail.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
+                    Text(text = movieDetail.value.releaseDate, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal, textAlign = TextAlign.Center)
                     // Overview
-                    Text(text = movieDetail.overview, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
+                    Text(text = movieDetail.value.overview, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(5.dp), fontWeight = FontWeight.Normal)
                 }
                 Column(
                     modifier = Modifier
@@ -115,42 +115,42 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                     horizontalAlignment = Alignment.Start
                 ) {
                     // Language
-                    if (movieDetail.spokenLanguages.isNotEmpty()) {
+                    if (movieDetail.value.spokenLanguages.isNotEmpty()) {
                         var languageString = "・Language :  \n"
-                        for (i in movieDetail.spokenLanguages.indices) {
-                            languageString += "\u0020 \u0020 ${movieDetail.spokenLanguages[i].englishName}"
-                            if (movieDetail.spokenLanguages[i].name.isNotEmpty() || movieDetail.spokenLanguages[i].name != "") {
-                                languageString += "\u0020 (${movieDetail.spokenLanguages[i].name})"
+                        for (i in movieDetail.value.spokenLanguages.indices) {
+                            languageString += "\u0020 \u0020 ${movieDetail.value.spokenLanguages[i].englishName}"
+                            if (movieDetail.value.spokenLanguages[i].name.isNotEmpty() || movieDetail.value.spokenLanguages[i].name != "") {
+                                languageString += "\u0020 (${movieDetail.value.spokenLanguages[i].name})"
                             }
-                            if (i < movieDetail.spokenLanguages.size-1) {
+                            if (i < movieDetail.value.spokenLanguages.size-1) {
                                 languageString += "\n"
                             }
                         }
                         Text(text = languageString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                     }
                     // Production Company
-                    if (movieDetail.productionCompanies.isNotEmpty()) {
+                    if (movieDetail.value.productionCompanies.isNotEmpty()) {
                         var producerString = "・Production Company : \n"
-                        for (i in movieDetail.productionCompanies.indices) {
-                            producerString += "\u0020 \u0020 ${movieDetail.productionCompanies[i].name}"
-                            if (movieDetail.productionCompanies[i].originCountry.isNotEmpty() || movieDetail.productionCompanies[i].originCountry != "") {
-                                producerString += "\u0020 (${movieDetail.productionCompanies[i].originCountry})"
+                        for (i in movieDetail.value.productionCompanies.indices) {
+                            producerString += "\u0020 \u0020 ${movieDetail.value.productionCompanies[i].name}"
+                            if (movieDetail.value.productionCompanies[i].originCountry.isNotEmpty() || movieDetail.value.productionCompanies[i].originCountry != "") {
+                                producerString += "\u0020 (${movieDetail.value.productionCompanies[i].originCountry})"
                             }
-                            if (i < movieDetail.productionCompanies.size-1) {
+                            if (i < movieDetail.value.productionCompanies.size-1) {
                                 producerString += "\n"
                             }
                         }
                         Text(text = producerString, color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                     }
                     // Budget & Revenue
-                    if (movieDetail.budget != 0L || movieDetail.revenue != 0L) {
-                        val budgetString = if (movieDetail.budget != 0L) {
-                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.budget).split(".")[0]
+                    if (movieDetail.value.budget != 0L || movieDetail.value.revenue != 0L) {
+                        val budgetString = if (movieDetail.value.budget != 0L) {
+                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.value.budget).split(".")[0]
                         } else {
                             "-"
                         }
-                        val revenueString = if (movieDetail.revenue != 0L) {
-                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.revenue).split(".")[0]
+                        val revenueString = if (movieDetail.value.revenue != 0L) {
+                            NumberFormat.getCurrencyInstance(Locale.US).format(movieDetail.value.revenue).split(".")[0]
                         } else {
                             "-"
                         }

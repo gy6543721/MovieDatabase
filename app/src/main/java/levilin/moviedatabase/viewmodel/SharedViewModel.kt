@@ -20,7 +20,6 @@ import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.abs
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, application: Application): AndroidViewModel(application) {
@@ -50,9 +49,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun loadMovieList() {
         isMovieListLoading.value = true
-        if (searchQuery.value != ConstantValue.DEFAULT_QUERY && displayQuery.value != "") {
-            searchQuery.value = displayQuery.value
-        }
         updateMovieList(query = searchQuery.value)
     }
 
@@ -65,21 +61,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         updateMovieDetail(id = id)
     }
 
-    fun moveCurrentPage(input: Int) {
-        if (input > 0) {
-            if (currentPage.value < totalPage.value) {
-                currentPage.value += input
-                loadMovieList()
-            } else {
-                return
-            }
+    fun moveCurrentPage(value: Int) {
+        val targetPage = currentPage.value + value
+        if (targetPage < 1 || targetPage > totalPage.value) {
+            return
         } else {
-            if (currentPage.value > 1) {
-                currentPage.value -= abs(input)
-                loadMovieList()
-            } else {
-                return
-            }
+            currentPage.value = targetPage
+            loadMovieList()
         }
     }
 
@@ -129,8 +117,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    private fun checkFavorite(input: MovieResult): Boolean {
-        return favoriteList.value.contains(input)
+    fun checkFavorite(input: MovieResult): Boolean {
+        for (i in favoriteList.value.indices) {
+            if (favoriteList.value[i].id == input.id) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun checkInternetConnection(): Boolean {
@@ -165,6 +158,10 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 //                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieInfoListResponse.value = handleMovieListResponse(response = response)
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
+                if (currentPage.value > totalPage.value) {
+                    currentPage.value = 1
+                    loadMovieList()
+                }
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
                 errorMovieListMessage.value = ""
             } catch (e: Exception) {
@@ -175,10 +172,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
-        }
-
-        if (currentPage.value > totalPage.value) {
-            currentPage.value = 1
         }
         isMovieListLoading.value = false
     }

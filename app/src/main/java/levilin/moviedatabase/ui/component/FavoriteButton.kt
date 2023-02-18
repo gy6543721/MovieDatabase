@@ -16,10 +16,8 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 
 @Composable
 fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel) {
-    val favoriteList by remember { mutableStateOf(viewModel.favoriteList) }
     var isFavorite by remember { mutableStateOf(false) }
-    isFavorite = favoriteList.value.contains(entry)
-    val isStatusChanged by remember { derivedStateOf { isFavorite } }
+    isFavorite = viewModel.checkFavorite(input = entry)
 
     IconToggleButton(
         checked = isFavorite,
@@ -30,7 +28,7 @@ fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel:
         }
     ) {
         Icon(
-            tint = if (isStatusChanged) {
+            tint = if (isFavorite) {
                 Color.Red
             } else {
                 MaterialTheme.colors.favouriteButtonColor
@@ -39,7 +37,7 @@ fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel:
                 scaleX = 1.1f
                 scaleY = 1.1f
             },
-            imageVector = if (isStatusChanged) {
+            imageVector = if (isFavorite) {
                 Icons.Filled.Favorite
             } else {
                 Icons.Default.FavoriteBorder

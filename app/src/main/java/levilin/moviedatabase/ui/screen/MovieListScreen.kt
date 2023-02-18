@@ -33,9 +33,9 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    var searchQuery by remember { viewModel.searchQuery }
-    var currentPage by remember { viewModel.currentPage }
-    val totalPage by remember { viewModel.totalPage }
+    val searchQuery by remember { mutableStateOf(value = viewModel.searchQuery) }
+    val currentPage by remember { mutableStateOf(value = viewModel.currentPage) }
+    val totalPage by remember { mutableStateOf(value = viewModel.totalPage) }
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -51,8 +51,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     .focusRequester(focusRequester),
                 viewModel = viewModel,
                 onSearch = { input ->
-                    searchQuery = input
-                    currentPage = 1
+                    searchQuery.value = input
                     viewModel.loadMovieList()
                 }
             )
@@ -67,14 +66,14 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     icon = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier.size(32.dp),
                     onClick = {
-                        viewModel.moveCurrentPage(input = -1)
+                        viewModel.moveCurrentPage(value = -1)
                         focusManager.clearFocus()
                     }
                 )
                 Text(
                     textAlign = TextAlign.Center,
-                    text = if (totalPage != Int.MAX_VALUE) {
-                        "$currentPage / $totalPage"
+                    text = if (totalPage.value != Int.MAX_VALUE) {
+                        "${currentPage.value} / ${totalPage.value}"
                     } else {
                         "- / -"
                     },
@@ -85,7 +84,7 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                     icon = Icons.Default.KeyboardArrowRight,
                     modifier = Modifier.size(32.dp),
                     onClick = {
-                        viewModel.moveCurrentPage(input = 1)
+                        viewModel.moveCurrentPage(value = 1)
                         focusManager.clearFocus()
                     }
                 )
