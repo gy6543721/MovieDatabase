@@ -10,9 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import levilin.moviedatabase.data.local.LocalRepository
 import levilin.moviedatabase.data.remote.RemoteRepository
@@ -214,6 +212,9 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 //                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
+                if (id != movieDetailResponse.value?.data?.id.toString()) {
+                    getMovieDetail(id = id, queries = provideMovieDetailQueries())
+                }
                 errorMovieDetailMessage.value = ""
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
@@ -224,12 +225,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
         }
-
-        if (id == movieDetail.value.id.toString()) {
-            isMovieDetailLoading.value = false
-        } else {
-            getMovieDetail(id = id, queries = provideMovieDetailQueries())
-        }
+        isMovieDetailLoading.value = false
     }
 
     private fun handleMovieDetailResponse(response: Response<MovieDetail>): NetworkResult<MovieDetail> {
