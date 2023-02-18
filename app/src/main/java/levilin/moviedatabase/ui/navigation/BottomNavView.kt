@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import levilin.moviedatabase.utility.BottomNavItem
+import levilin.moviedatabase.model.navigation.BottomNavItem
 import levilin.moviedatabase.ui.theme.buttonBackgroundColor
 import levilin.moviedatabase.ui.theme.buttonIconColor
 

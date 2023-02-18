@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.utility.ConstantValue
 
-
 @Database(entities = [MovieResult::class], version = 1, exportSchema = false)
 abstract class LocalDataSource : RoomDatabase() {
     abstract fun localDataSourceDAO(): LocalDataSourceDAO

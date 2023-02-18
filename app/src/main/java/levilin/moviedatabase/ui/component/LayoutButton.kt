@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.utility.clickableSingle
 
-
 @Composable
 fun LayoutButton(icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
     Box(

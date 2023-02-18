@@ -22,7 +22,6 @@ import levilin.moviedatabase.ui.theme.screenBackgroundColor
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
-
 @Composable
 fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel = hiltViewModel(), navController: NavController) {
     Box(

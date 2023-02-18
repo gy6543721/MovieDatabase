@@ -1,6 +1,5 @@
 package levilin.moviedatabase.model.list
 
-
 import com.google.gson.annotations.SerializedName
 
 data class MovieInfo(
