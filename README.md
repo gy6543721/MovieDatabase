@@ -35,7 +35,7 @@ Coding Challenge
 A client has tasked us to build an app where their customers are able to search for movies, see details for a given movie, favorite that movie, see all favorited movies.  
 The app will mainly use themoviedb.org's API and will put the media front and center for the user.
 
-## Steps to implement
+## Requirements
 
 1) Make an API key following the steps here: https://developers.themoviedb.org/3/getting-started/introduction  
 2) Film search (using this API endpoint **GET** https://api.themoviedb.org/3/search/movie?api_key={apikey}&query={search_query}), display the films in whatever UI you want.  
