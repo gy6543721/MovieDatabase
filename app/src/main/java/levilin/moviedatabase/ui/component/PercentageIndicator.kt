@@ -38,14 +38,14 @@ fun PercentageIndicator(percentage: Float, size: Int) {
            },
             strokeWidth = (size / 12).dp
         )
-        Text(text = getPercentString(percent = percentage), fontSize = (size / 5).sp, color = MaterialTheme.colors.buttonIconColor)
+        Text(text = getPercentageString(percent = percentage), fontSize = (size / 5).sp, color = MaterialTheme.colors.buttonIconColor)
     }
     LaunchedEffect(percentage) {
         progress = percentage
     }
 }
 
-fun getPercentString(percent: Float): String {
+fun getPercentageString(percent: Float): String {
     return java.lang.String.format(Locale.US, "%d%%", (percent * 100).toInt())
 }
 

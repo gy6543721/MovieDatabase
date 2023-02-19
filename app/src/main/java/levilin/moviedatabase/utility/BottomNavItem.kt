@@ -1,10 +1,9 @@
-package levilin.moviedatabase.model.navigation
+package levilin.moviedatabase.utility
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.ui.graphics.vector.ImageVector
-import levilin.moviedatabase.utility.ConstantValue
 
 sealed class BottomNavItem(var title: String, var icon: ImageVector, var route: String){
     object MovieList : BottomNavItem(title = ConstantValue.NAV_ITEM_MOVIES, icon = Icons.Default.List, route = "movie_list_screen")

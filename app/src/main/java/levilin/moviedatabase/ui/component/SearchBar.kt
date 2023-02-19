@@ -37,7 +37,6 @@ import levilin.moviedatabase.ui.theme.searchBarBorderColor
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
-
 @ExperimentalComposeUiApi
 @Composable
 fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: SharedViewModel, onSearch: (String) -> Unit = {}) {
@@ -80,7 +79,7 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
                     isHintDisplayed = false
                     onSearch(inputValue)
                 }
-                Log.d("TAG", inputValue)
+//                Log.d("TAG", inputValue)
             },
             maxLines = 1,
             singleLine = true,
