@@ -147,7 +147,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private suspend fun getMovieListSafeCall(queries: Map<String, String>) {
         if (checkInternetConnection()) {
             try {
-                val response = remoteRepository.remoteDataSource.getMovies(queries = queries)
+                val response = remoteRepository.remoteDataSource.getMovieList(queries = queries)
 //                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieInfoListResponse.value = handleMovieListResponse(response = response)
                 totalPage.value = movieInfoListResponse.value!!.data!!.totalPages

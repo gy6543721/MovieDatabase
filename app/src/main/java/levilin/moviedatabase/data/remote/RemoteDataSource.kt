@@ -6,8 +6,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val moviesAPI: MoviesAPI) {
-    // Get MovieInfo
-    suspend fun getMovies(queries: Map<String, String>): Response<MovieInfo> {
+    // Get MovieInfo List
+    suspend fun getMovieList(queries: Map<String, String>): Response<MovieInfo> {
         return moviesAPI.getMovies(queries = queries)
     }
 
