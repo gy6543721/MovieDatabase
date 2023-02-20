@@ -11,12 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.request.ImageRequest
+import levilin.moviedatabase.R
 import levilin.moviedatabase.ui.component.LayoutButton
 import levilin.moviedatabase.ui.component.LoadableAsyncImage
 import levilin.moviedatabase.ui.component.PercentageIndicator
@@ -55,7 +57,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                 LayoutButton(icon = Icons.Default.ArrowBack, modifier = Modifier.size(32.dp), onClick = { navController.popBackStack() })
                 // Adult
                 if (movieDetail.value.adult) {
-                    Text(text = "18+", color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(id = R.string.adult), color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
                 }
             }
             if (!isLoading.value) {
@@ -153,7 +155,9 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
     }
     if (isLoading.value) {
         // Loading Indicator & Retry Section
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(10.dp)) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)) {
             if(loadingErrorMessage.value.isBlank()) {
                 CircularProgressIndicator(color = MaterialTheme.colors.primary)
             } else {

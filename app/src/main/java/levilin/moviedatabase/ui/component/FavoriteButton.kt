@@ -10,9 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.ui.theme.favouriteButtonColor
 import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.R
 
 @Composable
 fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel) {
@@ -42,7 +44,7 @@ fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel:
             } else {
                 Icons.Default.FavoriteBorder
             },
-            contentDescription = "Favorite Icon"
+            contentDescription = stringResource(id = R.string.favorite_icon_description)
         )
     }
 }

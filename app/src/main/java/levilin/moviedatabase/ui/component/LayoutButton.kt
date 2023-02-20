@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import levilin.moviedatabase.R
 import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.utility.clickableSingle
 
@@ -24,7 +26,7 @@ fun LayoutButton(icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
         Icon(
             imageVector = icon,
             tint = MaterialTheme.colors.buttonIconColor,
-            contentDescription = "LayoutButton"
+            contentDescription = stringResource(id = R.string.layout_button_description)
         )
     }
 }

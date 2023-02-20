@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import levilin.moviedatabase.ui.component.FavoriteList
 import levilin.moviedatabase.viewmodel.SharedViewModel
 
-
 @Composable
 fun FavoriteListScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
     Surface(

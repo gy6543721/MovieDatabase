@@ -43,8 +43,8 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
     // Focus Control
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    // Search Query
 
+    // Search Query
     val searchQuery by remember { mutableStateOf(value = viewModel.searchQuery) }
     val inputText by remember { mutableStateOf(value = viewModel.displayQuery) }
     var isHintDisplayed by remember { mutableStateOf(value = hint != "") }

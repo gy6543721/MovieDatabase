@@ -2,5 +2,9 @@
     <string name="app_name">MovieDatabase</string>
     <string name="search_bar_hint">Search...</string>
     <string name="retry_button">Retry</string>
+    <string name="adult">18+</string>
+
     <string name="search_trailing_icon_description">Clear</string>
+    <string name="layout_button_description">Favorite Icon</string>
+    <string name="favorite_icon_description">Favorite Icon</string>
 </resources>
