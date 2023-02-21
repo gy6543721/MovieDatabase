@@ -46,7 +46,7 @@ fun PercentageIndicator(percentage: Float, size: Int) {
 }
 
 fun getPercentageString(percent: Float): String {
-    return java.lang.String.format(Locale.US, "%d%%", (percent * 100).toInt())
+    return String.format(Locale.US, "%d%%", (percent * 100).toInt())
 }
 
 @Composable

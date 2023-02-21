@@ -147,7 +147,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                         } else {
                             "-"
                         }
-                        Text(text = "・Budget / Revenue :   \n \u0020 \u0020 $budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
+                        Text(text = "・Budget / Revenue :   \n \u0020 \u0020$budgetString / $revenueString", color = MaterialTheme.colors.screenTextColor, modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp), fontWeight = FontWeight.Normal)
                     }
                 }
             }
