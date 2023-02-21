@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -170,7 +169,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
         }
         isMovieListLoading.value = false
-        Log.d("TAG", "currentPage: ${currentPage.value}")
+//        Log.d("TAG", "currentPage: ${currentPage.value}")
     }
 
     private fun handleMovieListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
