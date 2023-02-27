@@ -1,4 +1,4 @@
-# MovieDatabase Compose
+# MovieDB Compose
 [Google Play Store](https://play.google.com/store/apps/details?id=levilin.moviedatabase)  
 [Demo Video](https://youtu.be/fixcJBaKpcE)  
 <table>
