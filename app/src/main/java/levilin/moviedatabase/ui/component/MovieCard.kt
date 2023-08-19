@@ -25,7 +25,7 @@ import levilin.moviedatabase.viewmodel.SharedViewModel
 @Composable
 fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel = hiltViewModel(), navController: NavController) {
     Box(
-        contentAlignment = Alignment.TopCenter,
+        contentAlignment = Alignment.Center,
         modifier = modifier
             .shadow(5.dp, RoundedCornerShape(5.dp))
             .clip(RoundedCornerShape(5.dp))
@@ -38,27 +38,33 @@ fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: Shar
                 )
             }
     ) {
-        Box(contentAlignment = Alignment.TopEnd) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(modifier = Modifier.height(15.dp))
-                LoadableAsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(ConstantValue.IMAGE_BASE_URL + entry.posterPath)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = entry.title,
-                    modifier = Modifier.size(120.dp),
-                    alignment = Alignment.Center
-                )
-                Text(
-                    text = entry.title,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(5.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(modifier = Modifier.height(15.dp))
+            LoadableAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(ConstantValue.IMAGE_BASE_URL + entry.posterPath)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = entry.title,
+                modifier = Modifier.size(120.dp),
+                alignment = Alignment.Center
+            )
+            Text(
+                text = entry.title,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(5.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Box(
+            modifier = Modifier.align(Alignment.TopEnd) // Align this box to the top end
+        ) {
             FavoriteButton(entry = entry, viewModel = viewModel)
         }
     }
