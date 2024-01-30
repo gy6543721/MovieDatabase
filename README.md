@@ -26,7 +26,7 @@
 			<img src="pictures/006.png"  height=250>
 		</td>
 	</tr>
-<table>
+</table>
 
 Coding Challenge
 
