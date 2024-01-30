@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'levilin.moviedatabase'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "levilin.moviedatabase"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 6
         versionName "1.2.2"
 
@@ -41,7 +41,7 @@ android {
         viewBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-beta01'
+        kotlinCompilerExtensionVersion '1.2.0'
     }
     packagingOptions {
         resources {
