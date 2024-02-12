@@ -8,6 +8,9 @@ class NullStringToEmptyAdapterFactory<T> : TypeAdapterFactory {
         val rawType = type.rawType
         return if (rawType != String::class.java) {
             null
-        } else StringAdapter() as TypeAdapter<T>
+        } else {
+            @Suppress("UNCHECKED_CAST")
+            StringAdapter() as TypeAdapter<T>
+        }
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +54,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Back Button
-                LayoutButton(icon = Icons.Default.ArrowBack, modifier = Modifier.size(32.dp), onClick = { navController.popBackStack() })
+                LayoutButton(icon = Icons.AutoMirrored.Filled.ArrowBack, modifier = Modifier.size(32.dp), onClick = { navController.popBackStack() })
                 // Adult
                 if (movieDetail.value.adult) {
                     Text(text = stringResource(id = R.string.adult), color = MaterialTheme.colors.indicatorRed, modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp), fontWeight = FontWeight.Bold)
