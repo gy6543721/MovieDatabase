@@ -43,8 +43,8 @@ fun BottomNavView(navController: NavController, bottomBarState: MutableState<Boo
                         selected = currentRoute == item.route,
                         onClick = {
                             navController.navigate(item.route) {
-                                navController.graph.startDestinationRoute?.let { screen_route ->
-                                    popUpTo(screen_route) {
+                                navController.graph.startDestinationRoute?.let { route ->
+                                    popUpTo(route) {
                                         saveState = true
                                     }
                                 }
