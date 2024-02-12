@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     @Provides
     fun provideBaseUrl() = ConstantValue.BASE_URL
 
@@ -39,8 +38,8 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(timeout = 15, unit = TimeUnit.SECONDS)
+            .connectTimeout(timeout = 15, unit = TimeUnit.SECONDS)
             .build()
     }
 

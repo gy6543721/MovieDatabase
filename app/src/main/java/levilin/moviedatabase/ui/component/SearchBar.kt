@@ -78,7 +78,6 @@ fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: Share
                     isHintDisplayed = false
                     onSearch(inputValue)
                 }
-//                Log.d("TAG", inputValue)
             },
             maxLines = 1,
             singleLine = true,

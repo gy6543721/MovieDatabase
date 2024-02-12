@@ -20,10 +20,11 @@ import java.util.*
 
 @Composable
 fun PercentageIndicator(percentage: Float, size: Int) {
-    var progress by remember { mutableStateOf(0.1f) }
+    var progress by remember { mutableFloatStateOf(0.1f) }
     val animatedProgress = animateFloatAsState(
         targetValue = progress,
-        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+        label = "percentageIndicator"
     ).value
 
     Box(contentAlignment = Alignment.Center, modifier = Modifier.size(size.dp)) {

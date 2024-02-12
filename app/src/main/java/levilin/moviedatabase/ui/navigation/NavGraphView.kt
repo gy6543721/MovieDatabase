@@ -36,7 +36,6 @@ fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewMo
                 }
             )
         ) {
-//            Log.d("TAG", "Detail Page ID: $id / ${sharedViewModel.movieDetail.value.id}")
             MovieDetailScreen(
                 navController = navController,
                 viewModel = sharedViewModel

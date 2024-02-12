@@ -4,6 +4,4 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class RemoteRepository @Inject constructor(remoteDataSource: RemoteDataSource) {
-    val remoteDataSource = remoteDataSource
-}
+class RemoteRepository @Inject constructor(val remoteDataSource: RemoteDataSource)
