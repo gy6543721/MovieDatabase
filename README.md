@@ -35,8 +35,8 @@ Now support English, Japanese, Traditional Chinese, Simplified Chinese and Canto
 
 ## API
 - API Documentation: https://developers.themoviedb.org/3/getting-started/introduction  
-- Film search API endpoint: **GET** https://api.themoviedb.org/3/search/movie?api_key={apikey}&query={search_query})  
-- Film details API endpoint: **GET** https://api.themoviedb.org/3/movie/{movie_id}?api_key={apikey} 
+- Film search API endpoint: **GET** https://api.themoviedb.org/3/search/movie?api_key={apikey}&query={search_query}  
+- Film details API endpoint: **GET** https://api.themoviedb.org/3/movie/{movie_id}?api_key={apikey}  
 
 # Main Libraries Used
 * Compose
