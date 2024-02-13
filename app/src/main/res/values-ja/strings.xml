@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">映画データベース</string>
+    <string name="nav_item_movies">映画リスト</string>
+    <string name="nav_item_favorite">お気に入り</string>
     <string name="search_bar_hint">検索</string>
     <string name="retry_button">再実行</string>
     <string name="adult">１８＋</string>

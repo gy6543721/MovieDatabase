@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Movie Database</string>
-    <string name="search_bar_hint">Search…</string>
+    <string name="nav_item_movies">Movies</string>
+    <string name="nav_item_favorite">Favorite</string>
+    <string name="search_bar_hint">Search</string>
     <string name="retry_button">Retry</string>
     <string name="adult">18+</string>
     <string name="movie_detail_language">・Language : </string>

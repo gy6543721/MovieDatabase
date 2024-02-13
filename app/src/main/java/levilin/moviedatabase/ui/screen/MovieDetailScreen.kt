@@ -234,7 +234,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: MovieDatabaseView
                         )
                         SelectionContainer {
                             Text(
-                                text = "\u0020 \u0020$budgetString / $revenueString",
+                                text = "\u0020 \u0020 $budgetString / $revenueString",
                                 color = MaterialTheme.colors.screenTextColor,
                                 modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
                                 fontWeight = FontWeight.Normal
