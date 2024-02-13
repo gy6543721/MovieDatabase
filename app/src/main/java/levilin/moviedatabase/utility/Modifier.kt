@@ -1,5 +1,6 @@
 package levilin.moviedatabase.utility
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -9,6 +10,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 
+@SuppressLint("ModifierFactoryUnreferencedReceiver")
 fun Modifier.clickableSingle(
     enabled: Boolean = true,
     onClickLabel: String? = null,

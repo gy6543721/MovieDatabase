@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -19,19 +20,24 @@ import levilin.moviedatabase.model.list.MovieInfo
 import levilin.moviedatabase.utility.ConstantValue
 import levilin.moviedatabase.utility.NetworkResult
 import retrofit2.Response
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, application: Application): AndroidViewModel(application) {
+class SharedViewModel @Inject constructor(
+    private val remoteRepository: RemoteRepository,
+    private val localRepository: LocalRepository,
+    application: Application
+) : AndroidViewModel(application) {
     // API response
     private var movieInfoListResponse: MutableLiveData<NetworkResult<MovieInfo>> = MutableLiveData()
     private var movieDetailResponse: MutableLiveData<NetworkResult<MovieDetail>> = MutableLiveData()
 
     var searchQuery = mutableStateOf(value = ConstantValue.DEFAULT_QUERY)
     var displayQuery = mutableStateOf(value = "")
-    var currentPage = mutableStateOf(value = 1)
-    var totalPage = mutableStateOf(value = Int.MAX_VALUE)
-    
+    var currentPage = mutableIntStateOf(value = 1)
+    var totalPage = mutableIntStateOf(value = Int.MAX_VALUE)
+
     var errorMovieListMessage = mutableStateOf(value = "")
     var isMovieListLoading = mutableStateOf(value = true)
 
@@ -49,7 +55,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
 
     fun loadMovieList() {
         isMovieListLoading.value = true
-        getMovieList(queries = provideMovieListQueries(query = searchQuery.value, page = currentPage.value))
+        getMovieList(
+            queries = provideMovieListQueries(
+                query = searchQuery.value,
+                page = currentPage.intValue
+            )
+        )
     }
 
     fun loadFavoriteList() {
@@ -62,13 +73,13 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     fun moveCurrentPage(value: Int) {
-        val targetPage = currentPage.value + value
-        if (targetPage < 1 || targetPage > totalPage.value) {
+        val targetPage = currentPage.intValue + value
+        if (targetPage < 1 || targetPage > totalPage.intValue) {
             return
         } else {
-            currentPage.value = targetPage
+            currentPage.intValue = targetPage
         }
-        if (currentPage.value != movieInfoListResponse.value?.data?.page) {
+        if (currentPage.intValue != movieInfoListResponse.value?.data?.page) {
             loadMovieList()
         }
     }
@@ -125,9 +136,11 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     }
 
     private fun checkInternetConnection(): Boolean {
-        val connectivityManager = getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val networkCapability = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        val networkCapability =
+            connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
         return when {
             networkCapability.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             networkCapability.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
@@ -136,7 +149,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         }
     }
 
-    // For MovieInfo List
+    // For movie info list
     private fun getMovieList(queries: Map<String, String>) {
         viewModelScope.launch {
             getMovieListSafeCall(queries = queries)
@@ -147,14 +160,18 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         if (checkInternetConnection()) {
             try {
                 val response = remoteRepository.remoteDataSource.getMovieList(queries = queries)
-//                Log.d("TAG", "getMoviesListSafeCall Response: ${response.code()}")
                 movieInfoListResponse.value = handleMovieListResponse(response = response)
-                totalPage.value = movieInfoListResponse.value!!.data!!.totalPages
-                if (currentPage.value > totalPage.value) {
-                    currentPage.value = 1
-                    getMovieList(queries = provideMovieListQueries(query = searchQuery.value, page = currentPage.value))
+                totalPage.intValue = movieInfoListResponse.value!!.data!!.totalPages
+                if (currentPage.intValue > totalPage.intValue) {
+                    currentPage.intValue = 1
+                    getMovieList(
+                        queries = provideMovieListQueries(
+                            query = searchQuery.value,
+                            page = currentPage.intValue
+                        )
+                    )
                 }
-                if (currentPage.value != movieInfoListResponse.value!!.data!!.page) {
+                if (currentPage.intValue != movieInfoListResponse.value!!.data!!.page) {
                     return
                 }
                 movieList.value = movieInfoListResponse.value!!.data!!.movieResults
@@ -162,14 +179,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             } catch (e: Exception) {
                 movieInfoListResponse.value = NetworkResult.Error(message = e.localizedMessage)
                 errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
-//                Log.d("TAG", "error : ${movieInfoListResponse.value!!.message}")
             }
         } else {
             movieInfoListResponse.value = NetworkResult.Error(message = "No Internet Connection")
             errorMovieListMessage.value = movieInfoListResponse.value!!.message.toString()
         }
         isMovieListLoading.value = false
-//        Log.d("TAG", "currentPage: ${currentPage.value}")
     }
 
     private fun handleMovieListResponse(response: Response<MovieInfo>): NetworkResult<MovieInfo> {
@@ -177,10 +192,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error(message = "Time Out")
             }
+
             response.isSuccessful -> {
                 val moviesListResponse = response.body()
                 NetworkResult.Success(data = moviesListResponse!!)
             }
+
             else -> {
                 NetworkResult.Error(message = response.message().toString())
             }
@@ -193,11 +210,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             this["api_key"] = ConstantValue.API_KEY_V3
             this["query"] = query
             this["page"] = page.toString()
+            this["language"] = Locale.getDefault().toLanguageTag()
         }
         return queries
     }
 
-    // For MovieDetail Page
+    // For movie detail page
     private fun getMovieDetail(id: String, queries: Map<String, String>) {
         viewModelScope.launch {
             getMovieDetailSafeCall(id = id, queries = queries)
@@ -207,8 +225,8 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
     private suspend fun getMovieDetailSafeCall(id: String, queries: Map<String, String>) {
         if (checkInternetConnection()) {
             try {
-                val response = remoteRepository.remoteDataSource.getMovieDetail(id = id, queries = queries)
-//                Log.d("TAG", "getMovieDetailSafeCall Response: ${response.code()}")
+                val response =
+                    remoteRepository.remoteDataSource.getMovieDetail(id = id, queries = queries)
                 movieDetailResponse.value = handleMovieDetailResponse(response = response)
                 movieDetail.value = movieDetailResponse.value!!.data!!
                 if (id != movieDetailResponse.value?.data?.id.toString()) {
@@ -218,7 +236,6 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             } catch (e: Exception) {
                 movieDetailResponse.value = NetworkResult.Error(message = e.localizedMessage)
                 errorMovieDetailMessage.value = movieDetailResponse.value!!.message.toString()
-//                Log.d("TAG", "error : ${movieDetailResponse.value!!.message}")
             }
         } else {
             movieDetailResponse.value = NetworkResult.Error(message = "No Internet Connection")
@@ -232,10 +249,12 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error(message = "Time Out")
             }
+
             response.isSuccessful -> {
                 val movieDetailResponse = response.body()
                 NetworkResult.Success(data = movieDetailResponse!!)
             }
+
             else -> {
                 NetworkResult.Error(message = response.message().toString())
             }
@@ -246,6 +265,7 @@ class SharedViewModel @Inject constructor(private val remoteRepository: RemoteRe
         val queries = HashMap<String, String>()
         queries.apply {
             this["api_key"] = ConstantValue.API_KEY_V3
+            this["language"] = Locale.getDefault().toLanguageTag()
         }
         return queries
     }

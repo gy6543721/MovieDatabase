@@ -15,5 +15,4 @@ class RemoteDataSource @Inject constructor(private val moviesAPI: MoviesAPI) {
     suspend fun getMovieDetail(id: String, queries: Map<String, String>): Response<MovieDetail> {
         return moviesAPI.getMovieDetail(id = id, queries = queries)
     }
-
 }
