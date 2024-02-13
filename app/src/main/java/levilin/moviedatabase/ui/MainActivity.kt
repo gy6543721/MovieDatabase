@@ -21,14 +21,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import levilin.moviedatabase.ui.navigation.BottomNavView
 import levilin.moviedatabase.ui.navigation.NavGraphView
 import levilin.moviedatabase.ui.theme.MovieDatabaseTheme
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val movieDatabaseViewModel: MovieDatabaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                             paddingValue = PaddingValues(0.dp)
                         }
                     }
-                    NavGraphView(navController = navController, sharedViewModel = sharedViewModel, modifier = Modifier.padding(paddingValues = paddingValue))
+                    NavGraphView(navController = navController, movieDatabaseViewModel = movieDatabaseViewModel, modifier = Modifier.padding(paddingValues = paddingValue))
                 }
             }
         }

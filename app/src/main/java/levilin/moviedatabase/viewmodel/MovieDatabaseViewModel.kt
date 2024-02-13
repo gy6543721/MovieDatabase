@@ -24,7 +24,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(
+class MovieDatabaseViewModel @Inject constructor(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository,
     application: Application

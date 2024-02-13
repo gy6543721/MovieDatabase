@@ -13,11 +13,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.ui.theme.favouriteButtonColor
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 import levilin.moviedatabase.R
 
 @Composable
-fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel) {
+fun FavoriteButton(modifier: Modifier = Modifier, entry: MovieResult, viewModel: MovieDatabaseViewModel) {
     var isFavorite by remember { mutableStateOf(false) }
     isFavorite = viewModel.checkFavorite(input = entry)
 

@@ -3,6 +3,7 @@ package levilin.moviedatabase.ui.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,12 +28,12 @@ import levilin.moviedatabase.ui.theme.indicatorRed
 import levilin.moviedatabase.ui.theme.screenBackgroundColor
 import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.utility.ConstantValue
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun MovieDetailScreen(navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     val movieDetail by remember { mutableStateOf(value = viewModel.movieDetail) }
     val loadingErrorMessage by remember { mutableStateOf(value = viewModel.errorMovieDetailMessage) }
     val isLoading by remember { mutableStateOf(value = viewModel.isMovieDetailLoading) }
@@ -79,22 +80,26 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                         .padding(horizontal = 10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // English Title
-                    Text(
-                        text = movieDetail.value.title,
-                        color = MaterialTheme.colors.screenTextColor,
-                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-                    // Original Title
-                    Text(
-                        text = movieDetail.value.originalTitle,
-                        color = MaterialTheme.colors.screenTextColor,
-                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                        fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.Center
-                    )
+                    SelectionContainer {
+                        // Title
+                        Text(
+                            text = movieDetail.value.title,
+                            color = MaterialTheme.colors.screenTextColor,
+                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    SelectionContainer {
+                        // Original Title
+                        Text(
+                            text = movieDetail.value.originalTitle,
+                            color = MaterialTheme.colors.screenTextColor,
+                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                     // Poster
                     LoadableAsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
@@ -137,13 +142,15 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Center
                     )
-                    // Overview
-                    Text(
-                        text = movieDetail.value.overview,
-                        color = MaterialTheme.colors.screenTextColor,
-                        modifier = Modifier.padding(5.dp),
-                        fontWeight = FontWeight.Normal
-                    )
+                    SelectionContainer {
+                        // Overview
+                        Text(
+                            text = movieDetail.value.overview,
+                            color = MaterialTheme.colors.screenTextColor,
+                            modifier = Modifier.padding(5.dp),
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
                 }
                 Column(
                     modifier = Modifier
@@ -169,12 +176,14 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                             modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
                             fontWeight = FontWeight.Normal
                         )
-                        Text(
-                            text = languageString,
-                            color = MaterialTheme.colors.screenTextColor,
-                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                            fontWeight = FontWeight.Normal
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = languageString,
+                                color = MaterialTheme.colors.screenTextColor,
+                                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
                     }
                     // Production Company
                     if (movieDetail.value.productionCompanies.isNotEmpty()) {
@@ -194,12 +203,14 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                             modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
                             fontWeight = FontWeight.Normal
                         )
-                        Text(
-                            text = producerString,
-                            color = MaterialTheme.colors.screenTextColor,
-                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                            fontWeight = FontWeight.Normal
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = producerString,
+                                color = MaterialTheme.colors.screenTextColor,
+                                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
                     }
                     // Budget & Revenue
                     if (movieDetail.value.budget != 0L || movieDetail.value.revenue != 0L) {
@@ -221,12 +232,14 @@ fun MovieDetailScreen(navController: NavController, viewModel: SharedViewModel =
                             modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
                             fontWeight = FontWeight.Normal
                         )
-                        Text(
-                            text = "\u0020 \u0020$budgetString / $revenueString",
-                            color = MaterialTheme.colors.screenTextColor,
-                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
-                            fontWeight = FontWeight.Normal
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = "\u0020 \u0020$budgetString / $revenueString",
+                                color = MaterialTheme.colors.screenTextColor,
+                                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
                     }
                 }
             }

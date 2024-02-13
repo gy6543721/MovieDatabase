@@ -24,11 +24,11 @@ import levilin.moviedatabase.ui.component.LayoutButton
 import levilin.moviedatabase.ui.component.MovieList
 import levilin.moviedatabase.ui.component.SearchBar
 import levilin.moviedatabase.ui.theme.screenTextColor
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @ExperimentalComposeUiApi
 @Composable
-fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun MovieListScreen(navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     // Focus Control
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current

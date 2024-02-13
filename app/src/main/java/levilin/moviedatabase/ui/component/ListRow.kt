@@ -7,10 +7,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import levilin.moviedatabase.model.list.MovieResult
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @Composable
-fun ListRow(rowIndex: Int, entries: List<MovieResult>, navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun ListRow(rowIndex: Int, entries: List<MovieResult>, navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     Column {
         Row {
             MovieCard(
