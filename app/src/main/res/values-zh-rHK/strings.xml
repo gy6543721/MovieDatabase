@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">電影數據庫</string>
+    <string name="nav_item_movies">電影列表</string>
+    <string name="nav_item_favorite">我最鍾意</string>
+    <string name="search_bar_hint">搵電影</string>
+    <string name="retry_button">再試吓</string>
+    <string name="adult">18＋</string>
+    <string name="movie_detail_language">・語言：</string>
+    <string name="movie_detail_production_company">・出品公司：</string>
+    <string name="movie_detail_budget_revenue">・預算 / 收益：</string>
+
+    <string name="search_trailing_icon_description">清除搵尋</string>
+    <string name="layout_button_description">介面掣</string>
+    <string name="favorite_icon_description">鍾意掣</string>
+</resources>

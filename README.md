@@ -1,4 +1,9 @@
 # MovieDB Compose
+<img src="https://github.com/gy6543721/MovieDatabase/blob/main/app/src/main/res/mipmap-xxxhdpi/ic_moviedatabase_launcher.png" height="200"/>
+
+TMDB Android App written in Kotlin and Compose.  
+Now support English, Japanese, Traditional Chinese, Simplified Chinese and Cantonese, will support more languages in the future.  
+
 [Google Play Store](https://play.google.com/store/apps/details?id=levilin.moviedatabase)  
 [Demo Video](https://youtu.be/fixcJBaKpcE)  
 <table>
