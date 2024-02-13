@@ -72,8 +72,8 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                 )
                 Text(
                     textAlign = TextAlign.Center,
-                    text = if (totalPage.value != Int.MAX_VALUE) {
-                        "${currentPage.value} / ${totalPage.value}"
+                    text = if (totalPage.intValue != Int.MAX_VALUE) {
+                        "${currentPage.intValue} / ${totalPage.intValue}"
                     } else {
                         "- / -"
                     },

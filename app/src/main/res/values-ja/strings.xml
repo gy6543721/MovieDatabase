@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">映画データベース</string>
+    <string name="search_bar_hint">検索</string>
+    <string name="retry_button">再実行</string>
+    <string name="adult">１８＋</string>
+    <string name="movie_detail_language">・言語 : </string>
+    <string name="movie_detail_production_company">・制作会社 : </string>
+    <string name="movie_detail_budget_revenue">・予算 / 収益 : </string>
+
+    <string name="search_trailing_icon_description">検索清除</string>
+    <string name="layout_button_description">レイアウトボタン</string>
+    <string name="favorite_icon_description">お気に入りボタン</string>
+</resources>
