@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -35,8 +36,18 @@ fun BottomNavView(navController: NavController, bottomBarState: MutableState<Boo
 
                 items.forEach { item ->
                     BottomNavigationItem(
-                        icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                        label = { Text(text = item.title, fontSize = 9.sp) },
+                        icon = {
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = stringResource(id = item.titleStringID)
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(id = item.titleStringID),
+                                fontSize = 10.sp
+                            )
+                        },
                         selectedContentColor = MaterialTheme.colors.buttonIconColor,
                         unselectedContentColor = MaterialTheme.colors.buttonIconColor.copy(0.4f),
                         alwaysShowLabel = true,

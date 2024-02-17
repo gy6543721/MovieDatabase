@@ -8,7 +8,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -24,11 +23,10 @@ import levilin.moviedatabase.ui.component.LayoutButton
 import levilin.moviedatabase.ui.component.MovieList
 import levilin.moviedatabase.ui.component.SearchBar
 import levilin.moviedatabase.ui.theme.screenTextColor
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
-@ExperimentalComposeUiApi
 @Composable
-fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun MovieListScreen(navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     // Focus Control
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -72,8 +70,8 @@ fun MovieListScreen(navController: NavController, viewModel: SharedViewModel = h
                 )
                 Text(
                     textAlign = TextAlign.Center,
-                    text = if (totalPage.value != Int.MAX_VALUE) {
-                        "${currentPage.value} / ${totalPage.value}"
+                    text = if (totalPage.intValue != Int.MAX_VALUE) {
+                        "${currentPage.intValue} / ${totalPage.intValue}"
                     } else {
                         "- / -"
                     },

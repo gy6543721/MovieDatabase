@@ -2,7 +2,6 @@ package levilin.moviedatabase.ui.navigation
 
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -12,21 +11,20 @@ import androidx.navigation.navArgument
 import levilin.moviedatabase.ui.screen.FavoriteListScreen
 import levilin.moviedatabase.ui.screen.MovieDetailScreen
 import levilin.moviedatabase.ui.screen.MovieListScreen
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
-@ExperimentalComposeUiApi
 @Composable
-fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewModel, modifier: Modifier) {
+fun NavGraphView(navController: NavHostController, movieDatabaseViewModel: MovieDatabaseViewModel, modifier: Modifier) {
     NavHost(
         navController = navController,
         startDestination = "movie_list_screen",
         modifier = modifier.systemBarsPadding()
     ) {
         composable("movie_list_screen") {
-            MovieListScreen(navController = navController, viewModel = sharedViewModel)
+            MovieListScreen(navController = navController, viewModel = movieDatabaseViewModel)
         }
         composable("favorite_list_screen") {
-            FavoriteListScreen(navController = navController, viewModel = sharedViewModel)
+            FavoriteListScreen(navController = navController, viewModel = movieDatabaseViewModel)
         }
         composable(
             "movie_detail_screen/{id}",
@@ -38,7 +36,7 @@ fun NavGraphView(navController: NavHostController, sharedViewModel: SharedViewMo
         ) {
             MovieDetailScreen(
                 navController = navController,
-                viewModel = sharedViewModel
+                viewModel = movieDatabaseViewModel
             )
         }
 

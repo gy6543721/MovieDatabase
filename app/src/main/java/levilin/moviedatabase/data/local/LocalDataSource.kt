@@ -12,7 +12,6 @@ abstract class LocalDataSource : RoomDatabase() {
     abstract fun localDataSourceDAO(): LocalDataSourceDAO
 
     companion object {
-
         @Volatile
         private lateinit var instance: LocalDataSource
         private const val name = ConstantValue.DATABASE_FILE_NAME

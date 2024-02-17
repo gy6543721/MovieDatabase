@@ -20,10 +20,10 @@ import coil.request.ImageRequest
 import levilin.moviedatabase.model.list.MovieResult
 import levilin.moviedatabase.ui.theme.screenBackgroundColor
 import levilin.moviedatabase.utility.ConstantValue
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @Composable
-fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: SharedViewModel = hiltViewModel(), navController: NavController) {
+fun MovieCard(modifier: Modifier = Modifier, entry: MovieResult, viewModel: MovieDatabaseViewModel = hiltViewModel(), navController: NavController) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier

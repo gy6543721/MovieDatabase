@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">MovieDatabase</string>
-    <string name="search_bar_hint">Search...</string>
+    <string name="app_name">Movie Database</string>
+    <string name="nav_item_movies">Movies</string>
+    <string name="nav_item_favorite">Favorite</string>
+    <string name="search_bar_hint">Search</string>
     <string name="retry_button">Retry</string>
     <string name="adult">18+</string>
+    <string name="movie_detail_language">・Language : </string>
+    <string name="movie_detail_production_company">・Production Company : </string>
+    <string name="movie_detail_budget_revenue">・Budget / Revenue : </string>
 
-    <string name="search_trailing_icon_description">Clear</string>
-    <string name="layout_button_description">Favorite Icon</string>
+    <string name="search_trailing_icon_description">Search Clear</string>
+    <string name="layout_button_description">Layout Button</string>
     <string name="favorite_icon_description">Favorite Icon</string>
 </resources>

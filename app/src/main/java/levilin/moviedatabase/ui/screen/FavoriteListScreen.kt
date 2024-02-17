@@ -8,10 +8,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import levilin.moviedatabase.ui.component.FavoriteList
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @Composable
-fun FavoriteListScreen(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun FavoriteListScreen(navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()

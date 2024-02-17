@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">电影数据库</string>
+    <string name="nav_item_movies">电影列表</string>
+    <string name="nav_item_favorite">我的最爱</string>
+    <string name="search_bar_hint">搜索电影</string>
+    <string name="retry_button">重试</string>
+    <string name="adult">18＋</string>
+    <string name="movie_detail_language">・语言：</string>
+    <string name="movie_detail_production_company">・出品公司：</string>
+    <string name="movie_detail_budget_revenue">・预算 / 收益：</string>
+
+    <string name="search_trailing_icon_description">清除搜索</string>
+    <string name="layout_button_description">界面按钮</string>
+    <string name="favorite_icon_description">喜欢按钮</string>
+</resources>

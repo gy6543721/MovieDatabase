@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
 @Composable
-fun MovieList(navController: NavController, viewModel: SharedViewModel = hiltViewModel()) {
+fun MovieList(navController: NavController, viewModel: MovieDatabaseViewModel = hiltViewModel()) {
     val moviesList by remember { mutableStateOf(value = viewModel.movieList) }
     val loadingErrorMessage by remember { mutableStateOf(value = viewModel.errorMovieListMessage) }
     val isLoading by remember { mutableStateOf(value = viewModel.isMovieListLoading) }

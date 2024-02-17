@@ -14,7 +14,7 @@ fun Modifier.clickableSingle(
     onClickLabel: String? = null,
     role: Role? = null,
     onClick: () -> Unit
-) = composed(
+) = this.composed(
     inspectorInfo = debugInspectorInfo {
         name = "clickable"
         properties["enabled"] = enabled

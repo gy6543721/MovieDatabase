@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
@@ -34,11 +33,10 @@ import levilin.moviedatabase.ui.theme.buttonIconColor
 import levilin.moviedatabase.ui.theme.screenTextColor
 import levilin.moviedatabase.ui.theme.searchBarBorderColor
 import levilin.moviedatabase.utility.ConstantValue
-import levilin.moviedatabase.viewmodel.SharedViewModel
+import levilin.moviedatabase.viewmodel.MovieDatabaseViewModel
 
-@ExperimentalComposeUiApi
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: SharedViewModel, onSearch: (String) -> Unit = {}) {
+fun SearchBar(modifier: Modifier = Modifier, hint: String = "", viewModel: MovieDatabaseViewModel, onSearch: (String) -> Unit = {}) {
     // Focus Control
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current

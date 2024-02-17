@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class LocalRepository @Inject constructor(private val localDataSourceDAO: LocalDataSourceDAO) {
-
     val getAllItems: Flow<List<MovieResult>> = localDataSourceDAO.getAllItems()
 
     suspend fun insertItem(movieResult: MovieResult) {
