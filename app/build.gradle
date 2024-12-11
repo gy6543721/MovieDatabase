@@ -88,7 +88,7 @@ dependencies {
 
     // Compose Navigation
     implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
