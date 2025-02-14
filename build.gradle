@@ -8,7 +8,7 @@ buildscript {
         retrofit_version = "2.11.0"
         gson_version = "2.10.1"
         okhttp_version = "4.12.0"
-        compose_ui_version = "1.7.4"
+        compose_ui_version = "1.7.8"
         coroutines_version = "1.6.4"
         nav_version = "2.8.3"
         agp_version = "8.7.1"
