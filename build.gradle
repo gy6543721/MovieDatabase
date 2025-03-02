@@ -1,33 +1,14 @@
 buildscript {
-    ext {
-        kotlin_version = "1.9.24"
-        kotlin_compiler_version = "1.5.14"
-        hilt_version = "2.52"
-        room_version = "2.6.1"
-        coil_version = "2.7.0"
-        retrofit_version = "2.11.0"
-        gson_version = "2.10.1"
-        okhttp_version = "4.12.0"
-        compose_ui_version = "1.7.4"
-        coroutines_version = "1.6.4"
-        nav_version = "2.8.3"
-        agp_version = "8.7.1"
-        ksp_version = "1.9.24-1.0.20"
-    }
     repositories {
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
-    }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 plugins {
-    //noinspection GradlePluginVersion
-    id("com.android.application") version "$agp_version" apply false
-    //noinspection GradlePluginVersion
-    id("com.android.library") version "$agp_version" apply false
-    id("org.jetbrains.kotlin.android") version "$kotlin_version" apply false
-    id("com.google.devtools.ksp") version "$ksp_version" apply false
+    alias(libs.plugins.agp) apply false
+    alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.hilt.android.plugin) apply false
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.secrets.gradle.plugin) apply false
 }

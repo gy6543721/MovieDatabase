@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +34,15 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
                 
-                Scaffold(bottomBar = { BottomNavView(navController = navController, bottomBarState = bottomBarState) }) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.statusBarsPadding().navigationBarsPadding(),
+                    bottomBar = {
+                        BottomNavView(
+                            navController = navController,
+                            bottomBarState = bottomBarState
+                        )
+                    }
+                ) { innerPadding ->
                     var paddingValue = innerPadding
                     when (navBackStackEntry?.destination?.route) {
                         "movie_list_screen" -> {
