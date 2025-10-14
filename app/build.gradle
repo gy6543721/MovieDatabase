@@ -9,14 +9,14 @@ plugins {
 
 android {
     namespace "levilin.moviedatabase"
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId "levilin.moviedatabase"
         minSdk 26
-        targetSdk 35
-        versionCode 9
-        versionName "1.4.0"
+        targetSdk 36
+        versionCode 11
+        versionName "1.4.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -34,12 +34,11 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            javaParameters.set(true)
+            freeCompilerArgs.add("-java-parameters")
+        }
     }
     buildFeatures {
         compose true

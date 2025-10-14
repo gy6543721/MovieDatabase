@@ -14,16 +14,15 @@ abstract class LocalDataSource : RoomDatabase() {
     companion object {
         @Volatile
         private lateinit var instance: LocalDataSource
-        private const val name = ConstantValue.DATABASE_FILE_NAME
 
         fun getInstance(context: Context): LocalDataSource {
             if (!::instance.isInitialized) {
                 instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    LocalDataSource::class.java,
-                    name
+                    context = context.applicationContext,
+                    klass = LocalDataSource::class.java,
+                    name = ConstantValue.DATABASE_FILE_NAME
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(dropAllTables = false)
                     .build()
             }
             return instance
