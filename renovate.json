@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "baseBranches": [
+    "develop"
+  ],
+  "ignoreDeps": [
+    "org.jetbrains.kotlin.android",
+    "com.google.devtools.ksp"
   ]
 }
