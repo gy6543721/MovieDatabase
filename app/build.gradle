@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace "levilin.moviedatabase"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId "levilin.moviedatabase"
         minSdk 26
-        targetSdk 36
+        targetSdk 37
         versionCode 11
         versionName "1.4.2"
 
